@@ -1,0 +1,6 @@
+@maulllanam_api_be_HostAddress = http://localhost:5012
+
+GET {{maulllanam_api_be_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
