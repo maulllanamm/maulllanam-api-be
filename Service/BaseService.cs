@@ -67,5 +67,19 @@ public class BaseService<T> : IBaseService<T> where T : IBaseEntity
         return entity;
     }
 
+    public virtual async Task<bool> DeleteAsync(int id)
+    {
+        var entity = await _dbSet.FindAsync(id);
+        if (entity == null)
+        {
+            return false;
+        }
+
+        _dbSet.Remove(entity);
+        await _context.SaveChangesAsync();
+
+        return true;
+    }
+
     
 }
