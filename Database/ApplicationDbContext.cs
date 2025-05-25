@@ -11,10 +11,38 @@ public class ApplicationDbContext : DbContext
     }
 
     // DbSets
-
+    public DbSet<User> Users { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+        
+        modelBuilder.Entity<User>(entity =>
+        {
+            entity.ToTable("users");
+
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.Name)
+                .IsRequired()
+                .HasMaxLength(100);
+            entity.Property(e => e.Title)
+                .IsRequired()
+                .HasMaxLength(100);
+            entity.Property(e => e.Email)
+                .IsRequired()
+                .HasMaxLength(150);
+            entity.Property(e => e.Phone)
+                .HasMaxLength(20);
+            entity.Property(e => e.Summary)
+                .IsRequired()
+                .HasMaxLength(1000);
+
+            // BaseEntity fields
+            entity.Property(e => e.CreatedAt)
+                .IsRequired();
+            entity.Property(e => e.UpdatedAt);
+            entity.Property(e => e.IsDeleted)
+                .HasDefaultValue(false);
+        });
     }
     
     // Override SaveChanges untuk audit trail

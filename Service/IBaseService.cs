@@ -6,10 +6,10 @@ namespace maulllanam_api_be.Service;
 public interface IBaseService<T> where T : IBaseEntity
 {
     Task<IEnumerable<T>> GetAllAsync();
-    Task<T?> GetByIdAsync(int id);
+    Task<T?> GetByIdAsync(Guid id);
     Task<IEnumerable<T>> GetByConditionAsync(Expression<Func<T, bool>> condition);
     Task<T> CreateAsync(T entity);
     Task<T> UpdateAsync(T entity);
-    Task<bool> DeleteAsync(int id);
-    Task<bool> SoftDeleteAsync(int id);
+    Task<bool> DeleteAsync(Guid id);
+    Task<bool> SoftDeleteAsync(Guid id);
 }
