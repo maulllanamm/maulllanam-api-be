@@ -11,4 +11,5 @@ public interface IBaseService<T> where T : IBaseEntity
     Task<T> CreateAsync(T entity);
     Task<T> UpdateAsync(T entity);
     Task<bool> DeleteAsync(int id);
+    Task<bool> SoftDeleteAsync(int id);
 }
