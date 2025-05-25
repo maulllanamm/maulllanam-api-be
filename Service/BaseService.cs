@@ -81,5 +81,19 @@ public class BaseService<T> : IBaseService<T> where T : IBaseEntity
         return true;
     }
 
-    
+    public virtual async Task<bool> SoftDeleteAsync(int id)
+    {
+        var entity = await GetByIdAsync(id);
+        if (entity == null)
+        {
+            return false;
+        }
+
+        entity.IsDeleted = true;
+        entity.UpdatedAt = DateTime.UtcNow;
+
+        await _context.SaveChangesAsync();
+
+        return true;
+    }
 }
