@@ -50,5 +50,22 @@ public class BaseService<T> : IBaseService<T> where T : IBaseEntity
         return entity;
     }
 
+    public virtual async Task<T> UpdateAsync(T entity)
+    {
+        var existingEntity = await GetByIdAsync(entity.Id);
+        if (existingEntity == null)
+        {
+            throw new ArgumentException($"Entity with ID {entity.Id} not found");
+        }
 
+        entity.UpdatedAt = DateTime.UtcNow;
+        entity.CreatedAt = existingEntity.CreatedAt; 
+
+        _context.Entry(existingEntity).CurrentValues.SetValues(entity);
+        await _context.SaveChangesAsync();
+
+        return entity;
+    }
+
+    
 }
