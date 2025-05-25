@@ -24,7 +24,7 @@ public class BaseService<T> : IBaseService<T> where T : IBaseEntity
             .ToListAsync();
     }
 
-    public virtual async Task<T?> GetByIdAsync(int id)
+    public virtual async Task<T?> GetByIdAsync(Guid id)
     {
         return await _dbSet
             .FirstOrDefaultAsync(x => x.Id == id && !x.IsDeleted);
@@ -67,7 +67,7 @@ public class BaseService<T> : IBaseService<T> where T : IBaseEntity
         return entity;
     }
 
-    public virtual async Task<bool> DeleteAsync(int id)
+    public virtual async Task<bool> DeleteAsync(Guid id)
     {
         var entity = await _dbSet.FindAsync(id);
         if (entity == null)
@@ -81,7 +81,7 @@ public class BaseService<T> : IBaseService<T> where T : IBaseEntity
         return true;
     }
 
-    public virtual async Task<bool> SoftDeleteAsync(int id)
+    public virtual async Task<bool> SoftDeleteAsync(Guid id)
     {
         var entity = await GetByIdAsync(id);
         if (entity == null)

@@ -20,6 +20,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(connectionString));
 
 // 3. Register services
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped(typeof(IBaseService<>), typeof(BaseService<>));
 
 // 4. Add controllers and API services
