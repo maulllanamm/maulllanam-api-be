@@ -24,5 +24,11 @@ public class BaseService<T> : IBaseService<T> where T : IBaseEntity
             .ToListAsync();
     }
 
-  
+    public virtual async Task<T?> GetByIdAsync(int id)
+    {
+        return await _dbSet
+            .FirstOrDefaultAsync(x => x.Id == id && !x.IsDeleted);
+    }
+
+
 }
