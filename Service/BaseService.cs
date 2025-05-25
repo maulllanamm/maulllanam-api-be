@@ -39,5 +39,16 @@ public class BaseService<T> : IBaseService<T> where T : IBaseEntity
             .ToListAsync();
     }
 
-    
+    public virtual async Task<T> CreateAsync(T entity)
+    {
+        entity.CreatedAt = DateTime.UtcNow;
+        entity.IsDeleted = false;
+
+        await _dbSet.AddAsync(entity);
+        await _context.SaveChangesAsync();
+
+        return entity;
+    }
+
+
 }

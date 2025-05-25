@@ -8,5 +8,6 @@ public interface IBaseService<T> where T : IBaseEntity
     Task<IEnumerable<T>> GetAllAsync();
     Task<T?> GetByIdAsync(int id);
     Task<IEnumerable<T>> GetByConditionAsync(Expression<Func<T, bool>> condition);
+    Task<T> CreateAsync(T entity);
 
 }
