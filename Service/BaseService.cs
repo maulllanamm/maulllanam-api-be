@@ -30,5 +30,14 @@ public class BaseService<T> : IBaseService<T> where T : IBaseEntity
             .FirstOrDefaultAsync(x => x.Id == id && !x.IsDeleted);
     }
 
+    public virtual async Task<IEnumerable<T>> GetByConditionAsync(Expression<Func<T, bool>> condition)
+    {
+        return await _dbSet
+            .Where(x => !x.IsDeleted)
+            .Where(condition)
+            .OrderByDescending(x => x.CreatedAt)
+            .ToListAsync();
+    }
 
+    
 }
