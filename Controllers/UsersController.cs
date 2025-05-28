@@ -22,6 +22,13 @@ public class UsersController: ControllerBase
         return Ok(users);
     }
     
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<User>>> GetUsersById([FromQuery]Guid id)
+    {
+        var users = await _userService.GetByIdAsync(id);
+        return Ok(users);
+    }
+    
     [HttpPost]
     public async Task<ActionResult<User>> CreateUser(User user)
     {
