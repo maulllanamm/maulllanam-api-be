@@ -35,5 +35,12 @@ public class UsersController: ControllerBase
         var createdUser = await _userService.CreateAsync(user);
         return Ok(createdUser);
     }
+    
+    [HttpPut]
+    public async Task<ActionResult<IEnumerable<User>>> UpdateUser([FromBody] User user)
+    {
+        var users = await _userService.UpdateAsync(user);
+        return Ok(users);
+    }
    
 }
