@@ -24,7 +24,16 @@ public class UsersController: ControllerBase
     }
     
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<User>>> GetUsersById([FromQuery] Guid id)
+    [Route("{id}")]
+    public async Task<ActionResult<IEnumerable<User>>> GetUsersById(Guid id)
+    {
+        var users = await _userService.GetByIdAsync(id);
+        return Ok(users);
+    }
+    
+    [HttpGet]
+    [Route("{id}/about")]
+    public async Task<ActionResult<IEnumerable<User>>> GetAbout(Guid id)
     {
         var users = await _userService.GetByIdAsync(id);
         return Ok(users);
