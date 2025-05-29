@@ -27,16 +27,24 @@ public class UsersController: ControllerBase
     [Route("{id}")]
     public async Task<ActionResult<IEnumerable<User>>> GetUsersById(Guid id)
     {
-        var users = await _userService.GetByIdAsync(id);
-        return Ok(users);
+        var user = await _userService.GetByIdAsync(id);
+        if (user == null)
+        {
+            return NotFound();
+        }
+        return Ok(user);
     }
     
     [HttpGet]
     [Route("{id}/about")]
     public async Task<ActionResult<IEnumerable<User>>> GetAbout(Guid id)
     {
-        var users = await _userService.GetByIdAsync(id);
-        return Ok(users);
+        var user = await _userService.GetByIdAsync(id);
+        if (user == null)
+        {
+            return NotFound();
+        }
+        return Ok(user);
     }
     
     [HttpPost]
