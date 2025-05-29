@@ -1,3 +1,4 @@
+using maulllanam_api_be.DTO;
 using maulllanam_api_be.Entity;
 using maulllanam_api_be.Service;
 using Microsoft.AspNetCore.Mvc;
@@ -23,16 +24,24 @@ public class UsersController: ControllerBase
     }
     
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<User>>> GetUsersById([FromQuery]Guid id)
+    public async Task<ActionResult<IEnumerable<User>>> GetUsersById([FromQuery] Guid id)
     {
         var users = await _userService.GetByIdAsync(id);
         return Ok(users);
     }
     
     [HttpPost]
-    public async Task<ActionResult<User>> CreateUser([FromBody] User user)
+    public async Task<ActionResult<User>> CreateUser([FromBody] CreateUserDTO user)
     {
-        var createdUser = await _userService.CreateAsync(user);
+        var userEntity = new User
+        {
+            Name = user.Name,
+            Title = user.Title,
+            Email = user.Email,
+            Phone = user.Phone,
+            Summary = user.Summary
+        };
+        var createdUser = await _userService.CreateAsync(userEntity);
         return Ok(createdUser);
     }
     
