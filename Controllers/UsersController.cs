@@ -62,13 +62,22 @@ public class UsersController: ControllerBase
     }
     
     [HttpPut("{id}")]
-    public async Task<ActionResult<IEnumerable<User>>> UpdateUser(Guid id, [FromBody] User user)
+    public async Task<ActionResult<IEnumerable<User>>> UpdateUser(Guid id, [FromBody] UpdateUserDTO user)
     {
         if (id != user.Id)
         {
             return BadRequest();
         }
-        await _userService.UpdateAsync(user);
+        var userEntity = new User
+        {
+            Id = id,
+            Name = user.Name,
+            Title = user.Title,
+            Email = user.Email,
+            Phone = user.Phone,
+            Summary = user.Summary
+        };
+        await _userService.UpdateAsync(userEntity);
         return NoContent();
     }
    
