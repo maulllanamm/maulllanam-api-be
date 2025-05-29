@@ -23,8 +23,7 @@ public class UsersController: ControllerBase
         return Ok(users);
     }
     
-    [HttpGet]
-    [Route("{id}")]
+    [HttpGet ("{id}")]
     public async Task<ActionResult<IEnumerable<User>>> GetUsersById(Guid id)
     {
         var user = await _userService.GetByIdAsync(id);
@@ -62,11 +61,15 @@ public class UsersController: ControllerBase
         return Ok(createdUser);
     }
     
-    [HttpPut]
-    public async Task<ActionResult<IEnumerable<User>>> UpdateUser([FromBody] User user)
+    [HttpPut("{id}")]
+    public async Task<ActionResult<IEnumerable<User>>> UpdateUser(Guid id, [FromBody] User user)
     {
-        var users = await _userService.UpdateAsync(user);
-        return Ok(users);
+        if (id != user.Id)
+        {
+            return BadRequest();
+        }
+        await _userService.UpdateAsync(user);
+        return NoContent();
     }
    
 }
