@@ -10,6 +10,12 @@ public interface IBaseService<T> where T : IBaseEntity
     Task<List<T>> GetAllWithIncludeAsync(
         Expression<Func<T, bool>> filter = null,
         params Expression<Func<T, object>>[] includes);
+
+    Task<T> GetByIdWithIncludeAsync(
+        Guid id,
+        Expression<Func<T, bool>> filter = null,
+        params Expression<Func<T, object>>[] includes);
+    
     Task<T?> GetByIdAsync(Guid id);
     Task<IEnumerable<T>> GetByConditionAsync(Expression<Func<T, bool>> condition);
     Task<T> CreateAsync(T entity);
