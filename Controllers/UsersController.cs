@@ -27,7 +27,7 @@ public class UsersController: ControllerBase
     [HttpGet ("{id}")]
     public async Task<ActionResult<IEnumerable<User>>> GetUsersById(Guid id)
     {
-        var user = await _userService.GetByIdAsync(id);
+        var user = await _userService.GetByIdWithIncludeAsync(id, u => !u.IsDeleted, u=> u.SocialMedias);
         if (user == null)
         {
             return NotFound();

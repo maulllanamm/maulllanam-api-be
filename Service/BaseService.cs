@@ -38,6 +38,37 @@ public class BaseService<T> : IBaseService<T> where T : IBaseEntity
 
         return await query.ToListAsync();
     }
+    
+    public virtual async Task<T> GetByIdWithIncludeAsync(
+        Guid id,
+        Expression<Func<T, bool>> filter = null,
+        params Expression<Func<T, object>>[] includes)
+    {
+        IQueryable<T> query = _dbSet;
+
+        // Tambahkan includes
+        foreach (var include in includes)
+        {
+            query = query.Include(include);
+        }
+
+        // Gabungkan filter dengan id dan IsDeleted
+        Expression<Func<T, bool>> finalFilter = x => x.Id == id && !x.IsDeleted;
+
+        if (filter != null)
+        {
+            // Gabungkan filter kustom dan filter bawaan (id dan IsDeleted)
+            var parameter = Expression.Parameter(typeof(T));
+            var combined = Expression.AndAlso(
+                Expression.Invoke(finalFilter, parameter),
+                Expression.Invoke(filter, parameter)
+            );
+            finalFilter = Expression.Lambda<Func<T, bool>>(combined, parameter);
+        }
+
+        return await query.FirstOrDefaultAsync(finalFilter);
+    }
+
 
 
     public virtual async Task<T?> GetByIdAsync(Guid id)
