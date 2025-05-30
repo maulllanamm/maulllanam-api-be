@@ -29,6 +29,7 @@ public class UserService : BaseService<User>, IUserService
         }).ToList();
         return new AboutDTO
         {
+            Id = user.Id,
             Name = user.Name,
             Email = user.Email,
             Summary = user.Summary,
