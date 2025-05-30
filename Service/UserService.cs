@@ -21,14 +21,20 @@ public class UserService : BaseService<User>, IUserService
 
     public async Task<AboutDTO> GetAbout(Guid id)
     {
-        var user = await _dbSet.FirstOrDefaultAsync(x => x.Id == id && !x.IsDeleted);
+        var user = await base.GetByIdWithIncludeAsync(id, u => !u.IsDeleted, u=> u.SocialMedias);
+        var socialMedias = user.SocialMedias.Select(x => new SocialMediaDTO
+        {
+            Platform = x.Platform,
+            Url = x.Url,
+        }).ToList();
         return new AboutDTO
         {
             Name = user.Name,
             Email = user.Email,
             Summary = user.Summary,
             Title = user.Title,
-            Phone = user.Phone
+            Phone = user.Phone,
+            SocialMedias = socialMedias
         };
     }
 }
