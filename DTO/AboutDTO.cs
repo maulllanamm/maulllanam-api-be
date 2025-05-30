@@ -1,3 +1,5 @@
+using maulllanam_api_be.Entity;
+
 namespace maulllanam_api_be.DTO;
 
 public class AboutDTO
@@ -7,4 +9,5 @@ public class AboutDTO
     public string Email { get; set; } = string.Empty;
     public string? Phone { get; set; }
     public string Summary { get; set; }
+    public List<SocialMediaDTO> SocialMedias { get; set; } = new List<SocialMediaDTO>();
 }
