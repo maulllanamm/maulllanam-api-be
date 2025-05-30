@@ -12,6 +12,8 @@ public class ApplicationDbContext : DbContext
 
     // DbSets
     public DbSet<User> Users { get; set; }
+    public DbSet<SocialMedia> SocialMedias { get; set; }
+    
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -43,6 +45,35 @@ public class ApplicationDbContext : DbContext
             entity.Property(e => e.IsDeleted)
                 .HasDefaultValue(false);
         });
+        
+        modelBuilder.Entity<SocialMedia>(entity =>
+        {
+            entity.ToTable("social_medias");
+
+            entity.HasKey(e => e.Id);
+
+            entity.Property(e => e.Platform)
+                .IsRequired()
+                .HasMaxLength(50);
+
+            entity.Property(e => e.Url)
+                .IsRequired()
+                .HasMaxLength(200);
+            
+            // BaseEntity fields
+            entity.Property(e => e.CreatedAt)
+                .IsRequired();
+            entity.Property(e => e.UpdatedAt);
+            entity.Property(e => e.IsDeleted)
+                .HasDefaultValue(false);
+
+            // Relasi ke User
+            entity.HasOne(e => e.User)
+                .WithMany(u => u.SocialMedias)
+                .HasForeignKey(e => e.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+
     }
     
     // Override SaveChanges untuk audit trail

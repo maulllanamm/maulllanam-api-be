@@ -7,4 +7,8 @@ public class User : BaseEntity
     public string Email { get; set; } = string.Empty;
     public string? Phone { get; set; }
     public string Summary { get; set; }
+    
+    
+    public ICollection<SocialMedia> SocialMedias { get; set; } = new List<SocialMedia>();
+
 }
