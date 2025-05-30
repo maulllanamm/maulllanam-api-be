@@ -19,7 +19,8 @@ public class UsersController: ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<User>>> GetUsers()
     {
-        var users = await _userService.GetAllAsync();
+        var users = await _userService.GetAllWithIncludeAsync(    u => !u.IsDeleted,
+            u => u.SocialMedias);
         return Ok(users);
     }
     
