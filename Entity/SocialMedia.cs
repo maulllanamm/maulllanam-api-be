@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace maulllanam_api_be.Entity;
 
 public class SocialMedia: BaseEntity
@@ -7,5 +9,6 @@ public class SocialMedia: BaseEntity
     public string Url { get; set; } = string.Empty;
 
     // Navigation property
+    [JsonIgnore]
     public User User { get; set; } = null!;
 }
