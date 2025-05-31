@@ -16,6 +16,13 @@ public class SocialMediaController: ControllerBase
         _socialMediaService = socialMediaService;
     }
     
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<User>>> GetSocialMedias()
+    {
+        var users = await _socialMediaService.GetAllAsync();
+        return Ok(users);
+    }
+
     [HttpPost]
     public async Task<ActionResult<User>> CreateSocialMedia([FromBody] CreateSocialMediaDTO socialMediaDto)
     {
