@@ -23,6 +23,17 @@ public class SocialMediaController: ControllerBase
         return Ok(users);
     }
     
+    [HttpGet ("{id}")]
+    public async Task<ActionResult<IEnumerable<SocialMedia>>> GetSocialMediasById(Guid id)
+    {
+        var user = await _socialMediaService.GetByIdAsync(id);
+        if (user == null)
+        {
+            return NotFound();
+        }
+        return Ok(user);
+    }
+    
     [HttpGet ("{userId}/users")]
     public async Task<ActionResult<IEnumerable<SocialMedia>>> GetSocialMediasUserById(Guid userId)
     {
