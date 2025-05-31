@@ -22,6 +22,17 @@ public class SocialMediaController: ControllerBase
         var users = await _socialMediaService.GetAllAsync();
         return Ok(users);
     }
+    
+    [HttpGet ("{userId}/users")]
+    public async Task<ActionResult<IEnumerable<SocialMedia>>> GetSocialMediasUserById(Guid userId)
+    {
+        var user = await _socialMediaService.GetByConditionAsync(x => !x.IsDeleted && x.UserId == userId);
+        if (user == null)
+        {
+            return NotFound();
+        }
+        return Ok(user);
+    }
 
     [HttpPost]
     public async Task<ActionResult<SocialMedia>> CreateSocialMedia([FromBody] CreateSocialMediaDTO socialMediaDto)
