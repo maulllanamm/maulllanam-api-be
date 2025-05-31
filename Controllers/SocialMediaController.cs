@@ -17,14 +17,14 @@ public class SocialMediaController: ControllerBase
     }
     
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<User>>> GetSocialMedias()
+    public async Task<ActionResult<IEnumerable<SocialMedia>>> GetSocialMedias()
     {
         var users = await _socialMediaService.GetAllAsync();
         return Ok(users);
     }
 
     [HttpPost]
-    public async Task<ActionResult<User>> CreateSocialMedia([FromBody] CreateSocialMediaDTO socialMediaDto)
+    public async Task<ActionResult<SocialMedia>> CreateSocialMedia([FromBody] CreateSocialMediaDTO socialMediaDto)
     {
         var socialMedia = new SocialMedia
         {
