@@ -74,5 +74,29 @@ public class SocialMediaController: ControllerBase
         await _socialMediaService.UpdateAsync(socialMediaEntity);
         return NoContent();
     }
+    
+    [HttpDelete("{id}")]
+    public async Task<ActionResult<bool>> SoftDeleteSocialMedia(Guid id)
+    {
+        var socialMedia = await _socialMediaService.GetByIdAsync(id);
+        if (id != socialMedia.Id)
+        {
+            return BadRequest();
+        }
+
+        if (socialMedia == null)
+        {
+            return NotFound();
+        }
+
+        if (socialMedia.IsDeleted)
+        {
+            return BadRequest();
+        }
+        
+        
+        await _socialMediaService.DeleteAsync(id);
+        return NoContent();
+    }
    
 }
