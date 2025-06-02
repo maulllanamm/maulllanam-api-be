@@ -80,6 +80,30 @@ public class UsersController: ControllerBase
         };
         await _userService.UpdateAsync(userEntity);
         return NoContent();
+    }   
+    
+    [HttpDelete("{id}")]
+    public async Task<ActionResult<bool>> SoftDeleteUser(Guid id)
+    {
+        var user = await _userService.GetByIdAsync(id);
+        if (id != user.Id)
+        {
+            return BadRequest();
+        }
+
+        if (user == null)
+        {
+            return NotFound();
+        }
+
+        if (user.IsDeleted)
+        {
+            return BadRequest();
+        }
+        
+        
+        await _userService.DeleteAsync(id);
+        return NoContent();
     }
    
 }
