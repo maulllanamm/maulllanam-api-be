@@ -57,5 +57,22 @@ public class SocialMediaController: ControllerBase
         var createdSocialMedia = await _socialMediaService.CreateAsync(socialMedia);
         return Ok(createdSocialMedia);
     }
+    
+    [HttpPut("{id}")]
+    public async Task<ActionResult<IEnumerable<SocialMedia>>> UpdateUser(Guid id, [FromBody] UpdateSocialMediaDTO socialMediaDto)
+    {
+        if (id != socialMediaDto.Id)
+        {
+            return BadRequest();
+        }
+        var socialMediaEntity = new SocialMedia
+        {
+            Id = id,
+            Platform = socialMediaDto.Platform,
+            Url = socialMediaDto.Url,
+        };
+        await _socialMediaService.UpdateAsync(socialMediaEntity);
+        return NoContent();
+    }
    
 }
