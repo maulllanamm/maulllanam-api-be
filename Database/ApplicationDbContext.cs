@@ -13,6 +13,7 @@ public class ApplicationDbContext : DbContext
     // DbSets
     public DbSet<User> Users { get; set; }
     public DbSet<SocialMedia> SocialMedias { get; set; }
+    public DbSet<Skill> Skills { get; set; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -73,6 +74,31 @@ public class ApplicationDbContext : DbContext
                 .HasForeignKey(e => e.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
         });
+        
+        modelBuilder.Entity<Skill>(entity =>
+        {
+            entity.ToTable("skills");
+
+            entity.HasKey(e => e.Id);
+
+            entity.Property(e => e.Name)
+                .IsRequired()
+                .HasMaxLength(100);
+
+            entity.Property(e => e.Type)
+                .IsRequired()
+                .HasConversion<int>(); 
+            
+            entity.Property(e => e.CreatedAt).IsRequired();
+            entity.Property(e => e.UpdatedAt);
+            entity.Property(e => e.IsDeleted).HasDefaultValue(false);
+
+            entity.HasOne(e => e.User)
+                .WithMany(u => u.Skills)
+                .HasForeignKey(e => e.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+
 
     }
     
