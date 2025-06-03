@@ -35,6 +35,18 @@ public class SkillController: ControllerBase
         return Ok(skill);
     }
     
+    [HttpGet]
+    [Route("{id}/user")]
+    public async Task<ActionResult<IEnumerable<Skill>>> GetSkillByUserId(Guid userId)
+    {
+        var skills = await _skillService.GetBySkillUserId(userId);
+        if (!skills.Any())
+        {
+            return NotFound();
+        }
+        return Ok(skills);
+    }
+    
 
    
 }
