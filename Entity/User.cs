@@ -10,5 +10,6 @@ public class User : BaseEntity
     
     
     public ICollection<SocialMedia> SocialMedias { get; set; } = new List<SocialMedia>();
+    public ICollection<Skill> Skills { get; set; } = new List<Skill>();
 
 }
