@@ -62,6 +62,22 @@ public class SkillController: ControllerBase
         return Ok(createdSkill);
     }
     
-   
+    [HttpPut("{id}")]
+    public async Task<ActionResult<IEnumerable<Skill>>> UpdateSkill(Guid id, [FromBody] UpdateSkillDTO skillDto)
+    {
+        if (id != skillDto.Id)
+        {
+            return BadRequest();
+        }
+        var skillEntity = new Skill
+        {
+            Id = id,
+            Type = skillDto.Type,
+            UserId = skillDto.UserId,
+            Name = skillDto.Name,
+        };
+        await _skillService.UpdateAsync(skillEntity);
+        return NoContent();
+    }
    
 }
