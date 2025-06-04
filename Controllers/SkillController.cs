@@ -79,5 +79,29 @@ public class SkillController: ControllerBase
         await _skillService.UpdateAsync(skillEntity);
         return NoContent();
     }
+    
+    [HttpDelete("{id}")]
+    public async Task<ActionResult<bool>> SoftDeleteSkill(Guid id)
+    {
+        var skill = await _skillService.GetByIdAsync(id);
+        if (id != skill.Id)
+        {
+            return BadRequest();
+        }
+
+        if (skill == null)
+        {
+            return NotFound();
+        }
+
+        if (skill.IsDeleted)
+        {
+            return BadRequest();
+        }
+        
+        
+        await _skillService.DeleteAsync(id);
+        return NoContent();
+    }
    
 }
