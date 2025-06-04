@@ -46,7 +46,22 @@ public class SkillController: ControllerBase
         }
         return Ok(skills);
     }
-    
 
+    
+    [HttpPost]
+    public async Task<ActionResult<Skill>> CreateSkill([FromBody] CreateSkillDTO skill)
+    {
+        
+        var skillEntity = new Skill
+        {
+            Name = skill.Name,
+            UserId = skill.UserId,
+            Type = skill.Type,
+        };
+        var createdSkill = await _skillService.CreateAsync(skillEntity);
+        return Ok(createdSkill);
+    }
+    
+   
    
 }
