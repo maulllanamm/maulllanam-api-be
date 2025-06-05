@@ -29,7 +29,10 @@ public class UsersController: ControllerBase
     [HttpGet ("{id}")]
     public async Task<ActionResult<IEnumerable<User>>> GetUsersById(Guid id)
     {
-        var user = await _userService.GetByIdWithIncludeAsync(id, u => !u.IsDeleted, u=> u.SocialMedias);
+        var user = await _userService.GetByIdWithIncludeAsync(id, 
+            u => !u.IsDeleted, 
+            u=> u.SocialMedias,
+            u => u.Skills);
         if (user == null)
         {
             return NotFound();
