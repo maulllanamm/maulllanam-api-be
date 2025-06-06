@@ -1,3 +1,4 @@
+using System.Text.Json;
 using maulllanam_api_be.DTO;
 using maulllanam_api_be.Entity;
 using maulllanam_api_be.Service;
@@ -24,5 +25,20 @@ public class ProjectController: ControllerBase
     }
     
    
-   
+    [HttpPost]
+    public async Task<ActionResult<Project>> CreateProject([FromBody] CreateProjectlDTO project)
+    {
+        
+        var projectRntity = new Project
+        {
+            UserId = project.UserId,
+            Title = project.Title,
+            Description = project.Description,
+            Url = project.Url,
+            Tech = JsonSerializer.Serialize(project.Tech),
+            
+        };
+        var createdProject = await _projectService.CreateAsync(projectRntity);
+        return Ok(createdProject);
+    }
 }
