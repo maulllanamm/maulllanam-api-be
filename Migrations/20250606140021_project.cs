@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -7,13 +6,13 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace maulllanam_api_be.Migrations
 {
     /// <inheritdoc />
-    public partial class Project : Migration
+    public partial class project : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Projects",
+                name: "projects",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -21,16 +20,16 @@ namespace maulllanam_api_be.Migrations
                     Title = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
                     Description = table.Column<string>(type: "text", nullable: false),
                     Url = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
-                    Tech = table.Column<List<string>>(type: "jsonb", nullable: false),
+                    Tech = table.Column<string>(type: "jsonb", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Projects", x => x.Id);
+                    table.PrimaryKey("PK_projects", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Projects_users_UserId",
+                        name: "FK_projects_users_UserId",
                         column: x => x.UserId,
                         principalTable: "users",
                         principalColumn: "Id",
@@ -38,8 +37,8 @@ namespace maulllanam_api_be.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Projects_UserId",
-                table: "Projects",
+                name: "IX_projects_UserId",
+                table: "projects",
                 column: "UserId");
         }
 
@@ -47,7 +46,7 @@ namespace maulllanam_api_be.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Projects");
+                name: "projects");
         }
     }
 }

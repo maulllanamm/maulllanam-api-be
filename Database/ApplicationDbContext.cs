@@ -14,6 +14,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<User> Users { get; set; }
     public DbSet<SocialMedia> SocialMedias { get; set; }
     public DbSet<Skill> Skills { get; set; }
+    public DbSet<Project> Projects { get; set; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -101,7 +102,7 @@ public class ApplicationDbContext : DbContext
 
         modelBuilder.Entity<Project>(entity =>
         {
-            entity.ToTable("Projects");
+            entity.ToTable("projects");
 
             entity.HasKey(e => e.Id);
 
