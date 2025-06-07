@@ -15,6 +15,7 @@ public static class DbSeeder
         await SeedUsers(db);
         await SeedSkills(db);
         await SeedSocialMedias(db);
+        await SeedProjects(db);
     }
 
     private static async Task SeedUsers(ApplicationDbContext db)
@@ -74,5 +75,17 @@ public static class DbSeeder
         }
     }
     
+    private static async Task SeedProjects(ApplicationDbContext db)
+    {
+        if (!db.Projects.Any())
+        {
+            var tech = new List<string> { "React", "Tailwind", ".NET Core" };
+            db.Projects.AddRange(new List<Project>
+            {
+                new Project { Id = Guid.NewGuid(), UserId = _userGuid, Title = "BlockchainNet", Description = "Aplikasi simulasi blockchain sederhana yang dibuat dengan .NET Core", Tech = JsonSerializer.Serialize(tech) ,CreatedAt = DateTime.UtcNow, IsDeleted = false },
+            });
 
+            await db.SaveChangesAsync();
+        }
+    }
 }
