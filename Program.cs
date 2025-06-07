@@ -33,6 +33,9 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+// Panggil seeder
+await DbSeeder.SeedAsync(app.Services);
+
 // 5. Apply database migrations (optional - hanya jika diperlukan)
 using (var scope = app.Services.CreateScope())
 {
