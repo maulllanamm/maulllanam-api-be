@@ -14,7 +14,7 @@ public static class DbSeeder
 
         await SeedUsers(db);
         await SeedSkills(db);
-
+        await SeedSocialMedias(db);
     }
 
     private static async Task SeedUsers(ApplicationDbContext db)
@@ -60,5 +60,19 @@ public static class DbSeeder
         }
     }
 
+    private static async Task SeedSocialMedias(ApplicationDbContext db)
+    {
+        if (!db.SocialMedias.Any())
+        {
+            db.SocialMedias.AddRange(new List<SocialMedia>
+            {
+                new SocialMedia { Id = Guid.NewGuid(), UserId = _userGuid, Platform = "LinkedIn", Url = "https://www.linkedin.com/in/maulanamuhammad1/", CreatedAt = DateTime.UtcNow, IsDeleted = false },
+                new SocialMedia { Id = Guid.NewGuid(), UserId = _userGuid, Platform = "Github", Url = "https://github.com/maulllanamm", CreatedAt = DateTime.UtcNow, IsDeleted = false }
+            });
+
+            await db.SaveChangesAsync();
+        }
+    }
+    
 
 }
