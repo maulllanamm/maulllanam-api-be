@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: maulllanam-api-be
+    env: dotnet
+    plan: free
+    buildCommand: dotnet publish -c Release -o out
+    startCommand: dotnet out/maulllanam-api-be.dll
+    envVars:
+      - key: ConnectionStrings__DefaultConnection
+        fromDatabase:
+          name: maulllanam-api-be
+          property: connectionString
