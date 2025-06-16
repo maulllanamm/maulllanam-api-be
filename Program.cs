@@ -46,7 +46,7 @@ using (var scope = app.Services.CreateScope())
         // Pastikan database sudah dibuat
         await context.Database.EnsureCreatedAsync();
         
-        context.Database.MigrateAsync();
+        await context.Database.MigrateAsync();
         
         Console.WriteLine("Database connection successful!");
     }
