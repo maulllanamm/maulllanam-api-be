@@ -22,7 +22,8 @@ public class UsersController: ControllerBase
         var users = await _userService.GetAllWithIncludeAsync(
             u => !u.IsDeleted, 
             u => u.SocialMedias, 
-            u => u.Skills);
+            u => u.Skills,
+            u => u.Projects);
         return Ok(users);
     }
     
