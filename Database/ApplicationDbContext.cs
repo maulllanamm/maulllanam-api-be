@@ -16,6 +16,8 @@ public class ApplicationDbContext : DbContext
     public DbSet<Skill> Skills { get; set; }
     public DbSet<Project> Projects { get; set; }
     
+    public DbSet<Education> Educations { get; set; }
+    
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -128,6 +130,33 @@ public class ApplicationDbContext : DbContext
             entity.Property(e => e.Tech)
                 .HasColumnType("jsonb"); 
         });
+        
+        modelBuilder.Entity<Education>(entity =>
+        {
+            entity.ToTable("Educations");
+
+            entity.HasKey(e => e.Id);
+
+            entity.Property(e => e.Institution)
+                .IsRequired()
+                .HasMaxLength(200);
+
+            entity.Property(e => e.Degree)
+                .IsRequired()
+                .HasMaxLength(100);
+
+            entity.Property(e => e.Description)
+                .HasMaxLength(1000);
+
+            entity.Property(e => e.StartYear)
+                .IsRequired();
+
+            entity.HasOne(e => e.User)
+                .WithMany(u => u.Educations)
+                .HasForeignKey(e => e.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+
 
     }
     
