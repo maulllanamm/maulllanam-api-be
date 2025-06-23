@@ -133,7 +133,7 @@ public class ApplicationDbContext : DbContext
         
         modelBuilder.Entity<Education>(entity =>
         {
-            entity.ToTable("Educations");
+            entity.ToTable("educations");
 
             entity.HasKey(e => e.Id);
 
