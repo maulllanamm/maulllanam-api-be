@@ -16,6 +16,7 @@ public static class DbSeeder
         await SeedSkills(db);
         await SeedSocialMedias(db);
         await SeedProjects(db);
+        await SeedEducations(db);
     }
 
     private static async Task SeedUsers(ApplicationDbContext db)
@@ -88,4 +89,25 @@ public static class DbSeeder
             await db.SaveChangesAsync();
         }
     }
+    private static async Task SeedEducations(ApplicationDbContext db)
+    {
+        if (!db.Educations.Any())
+        {
+            db.Educations.Add(new Education
+            {
+                Id = Guid.NewGuid(),
+                UserId = _userGuid,
+                Institution = "Pakuan University",
+                Degree = "Bachelor of Computer Science",
+                StartYear = 2017,
+                EndYear = 2023,
+                Description = "Graduated with GPA 3.94",
+                CreatedAt = DateTime.UtcNow,
+                IsDeleted = false
+            });
+
+            await db.SaveChangesAsync();
+        }
+    }
+
 }
