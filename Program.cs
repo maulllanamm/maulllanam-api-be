@@ -46,28 +46,58 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// Panggil seeder
-await DbSeeder.SeedAsync(app.Services);
-
 // 5. Apply database migrations (optional - hanya jika diperlukan)
 using (var scope = app.Services.CreateScope())
 {
+    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+    
     try
     {
         var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
         
-        // Pastikan database sudah dibuat
-        //await context.Database.EnsureCreatedAsync();
+        logger.LogInformation("Memulai proses migrasi database...");
         
-        await context.Database.MigrateAsync();
+        // Cek apakah ada migrasi yang pending
+        var pendingMigrations = await context.Database.GetPendingMigrationsAsync();
+        if (pendingMigrations.Any())
+        {
+            logger.LogInformation($"Ditemukan {pendingMigrations.Count()} migrasi pending: {string.Join(", ", pendingMigrations)}");
+            
+            // Jalankan migrasi
+            await context.Database.MigrateAsync();
+            logger.LogInformation("Migrasi database berhasil!");
+        }
+        else
+        {
+            logger.LogInformation("Tidak ada migrasi pending. Database sudah up to date.");
+        }
         
-        Console.WriteLine("Database connection successful!");
+        // Cek migrasi yang sudah diterapkan
+        var appliedMigrations = await context.Database.GetAppliedMigrationsAsync();
+        logger.LogInformation($"Migrasi yang sudah diterapkan: {string.Join(", ", appliedMigrations)}");
+        
     }
     catch (Exception ex)
     {
-        Console.WriteLine($"Database connection failed: {ex.Message}");
+        logger.LogError(ex, "GAGAL menjalankan migrasi database: {Message}", ex.Message);
+        // JANGAN throw exception di sini untuk debugging
+        // throw; // Comment ini dulu
     }
 }
+
+// Panggil seeder
+try 
+{
+    await DbSeeder.SeedAsync(app.Services);
+}
+catch (Exception ex)
+{
+    var logger = app.Services.GetRequiredService<ILogger<Program>>();
+    logger.LogError(ex, "Error saat menjalankan seeder: {Message}", ex.Message);
+}
+
+
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
