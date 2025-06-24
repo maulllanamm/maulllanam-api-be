@@ -15,4 +15,11 @@ public class EducationController: ControllerBase
     {
         _service = service;
     }
+    
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<Education>>> GetEducations()
+    {
+        var educations = await _service.GetAllAsync();
+        return Ok(educations);
+    }
 }
