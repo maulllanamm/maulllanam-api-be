@@ -22,4 +22,15 @@ public class EducationController: ControllerBase
         var educations = await _service.GetAllAsync();
         return Ok(educations);
     }
+    
+    [HttpGet ("{id}")]
+    public async Task<ActionResult<IEnumerable<Education>>> GetEducationById(Guid id)
+    {
+        var education = await _service.GetByIdAsync(id);
+        if (education == null)
+        {
+            return NotFound();
+        }
+        return Ok(education);
+    }
 }
