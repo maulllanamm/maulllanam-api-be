@@ -1,11 +1,12 @@
 using System.Text.Json;
 using maulllanam_api_be.Entity;
+using Microsoft.EntityFrameworkCore;
 
 namespace maulllanam_api_be.Database;
 
 public static class DbSeeder
 {
-    private static readonly Guid _userGuid = Guid.NewGuid();
+    private static Guid _userGuid;
 
     public static async Task SeedAsync(IServiceProvider serviceProvider)
     {
@@ -13,6 +14,10 @@ public static class DbSeeder
         var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
         await SeedUsers(db);
+        
+        var user = await db.Users.FirstAsync(u => u.Email == "maulllanamuhammad@gmail.com");
+        _userGuid = user.Id;
+        
         await SeedSkills(db);
         await SeedSocialMedias(db);
         await SeedProjects(db);
@@ -21,22 +26,30 @@ public static class DbSeeder
 
     private static async Task SeedUsers(ApplicationDbContext db)
     {
-        if (!db.Users.Any())
-        {
-            db.Users.Add(new User
-            {
-                Id = _userGuid,
-                Name = "Maulana Muhammad",
-                Email = "maulllanamuhammad@gmail.com",
-                Title = ".NET Developer",
-                Phone = "081395007665",
-                Summary = "Hallo, Nama saya Maulana Muhammad, seorang .NET Developer yang sudah memiliki pengalaman selama lebih dari 2 tahun",
-                CreatedAt = DateTime.UtcNow,
-                IsDeleted = false
-            });
+        var existingUser = await db.Users.FirstOrDefaultAsync(u => u.Email == "maulllanamuhammad@gmail.com");
 
-            await db.SaveChangesAsync();
+        if (existingUser != null)
+        {
+            _userGuid = existingUser.Id;
+            return;
         }
+
+        var newUser = new User
+        {
+            Id = Guid.NewGuid(),
+            Name = "Maulana Muhammad",
+            Email = "maulllanamuhammad@gmail.com",
+            Title = ".NET Developer",
+            Phone = "081395007665",
+            Summary = "Hallo, Nama saya Maulana Muhammad, seorang .NET Developer yang sudah memiliki pengalaman selama lebih dari 2 tahun",
+            CreatedAt = DateTime.UtcNow,
+            IsDeleted = false
+        };
+
+        db.Users.Add(newUser);
+        await db.SaveChangesAsync();
+
+        _userGuid = newUser.Id;
     }
 
     private static async Task SeedSkills(ApplicationDbContext db)
