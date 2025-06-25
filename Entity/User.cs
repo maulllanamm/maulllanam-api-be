@@ -13,6 +13,7 @@ public class User : BaseEntity
     public ICollection<Skill> Skills { get; set; } = new List<Skill>();
     public ICollection<Project> Projects { get; set; } = new List<Project>();
     public ICollection<Education> Educations { get; set; } = new List<Education>();
+    public ICollection<Experience> Experiences { get; set; } = new List<Experience>();
 
 
 }

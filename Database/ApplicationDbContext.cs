@@ -17,6 +17,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<Project> Projects { get; set; }
     
     public DbSet<Education> Educations { get; set; }
+    public DbSet<Experience> Experiences { get; set; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -153,6 +154,32 @@ public class ApplicationDbContext : DbContext
 
             entity.HasOne(e => e.User)
                 .WithMany(u => u.Educations)
+                .HasForeignKey(e => e.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<Experience>(entity =>
+        {
+            entity.ToTable("experiences");
+
+            entity.HasKey(e => e.Id);
+
+            entity.Property(e => e.Company)
+                .IsRequired()
+                .HasMaxLength(200);
+
+            entity.Property(e => e.Role)
+                .IsRequired()
+                .HasMaxLength(100);
+
+            entity.Property(e => e.Description)
+                .HasMaxLength(1000);
+
+            entity.Property(e => e.StartDate)
+                .IsRequired();
+
+            entity.HasOne(e => e.User)
+                .WithMany(u => u.Experiences)
                 .HasForeignKey(e => e.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
         });
