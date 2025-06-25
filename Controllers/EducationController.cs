@@ -33,4 +33,21 @@ public class EducationController: ControllerBase
         }
         return Ok(education);
     }
+    
+    [HttpPost]
+    public async Task<ActionResult<Education>> CreateEducation([FromBody] CreateEducationDTO education)
+    {
+        
+        var educationEntity = new Education
+        {
+            UserId = education.UserId,
+            Degree = education.Degree,
+            Institution = education.Institution,
+            StartYear = education.StartYear,
+            EndYear = education.EndYear,
+            Description = education.Description,
+        };
+        var createdEducation = await _service.CreateAsync(educationEntity);
+        return Ok(createdEducation);
+    }
 }
