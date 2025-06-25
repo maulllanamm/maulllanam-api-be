@@ -52,7 +52,7 @@ public class EducationController: ControllerBase
     }
     
     [HttpPut("{id}")]
-    public async Task<ActionResult<IEnumerable<Education>>> UpdateSkill(Guid id, [FromBody] UpdateEducationDTO education)
+    public async Task<ActionResult<IEnumerable<Education>>> UpdateEducation(Guid id, [FromBody] UpdateEducationDTO education)
     {
         if (id != education.Id)
         {
@@ -69,6 +69,30 @@ public class EducationController: ControllerBase
             Description = education.Description,
         };
         await _service.UpdateAsync(educationEntity);
+        return NoContent();
+    }
+    
+    [HttpDelete("{id}")]
+    public async Task<ActionResult<bool>> SoftDeleteEducation(Guid id)
+    {
+        var education = await _service.GetByIdAsync(id);
+        if (id != education.Id)
+        {
+            return BadRequest();
+        }
+
+        if (education == null)
+        {
+            return NotFound();
+        }
+
+        if (education.IsDeleted)
+        {
+            return BadRequest();
+        }
+        
+        
+        await _service.DeleteAsync(id);
         return NoContent();
     }
 }
