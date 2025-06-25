@@ -50,4 +50,25 @@ public class EducationController: ControllerBase
         var createdEducation = await _service.CreateAsync(educationEntity);
         return Ok(createdEducation);
     }
+    
+    [HttpPut("{id}")]
+    public async Task<ActionResult<IEnumerable<Education>>> UpdateSkill(Guid id, [FromBody] UpdateEducationDTO education)
+    {
+        if (id != education.Id)
+        {
+            return BadRequest();
+        }
+        var educationEntity = new Education
+        {
+            Id = id,
+            UserId = education.UserId,
+            Degree = education.Degree,
+            Institution = education.Institution,
+            StartYear = education.StartYear,
+            EndYear = education.EndYear,
+            Description = education.Description,
+        };
+        await _service.UpdateAsync(educationEntity);
+        return NoContent();
+    }
 }
