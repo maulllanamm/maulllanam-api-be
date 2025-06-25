@@ -136,8 +136,8 @@ public static class DbSeeder
                     UserId = _userGuid,
                     Company = "PT Beit Tiwikrama",
                     Role = "Backend Developer",
-                    StartDate = new DateTime(2023, 1, 1),
-                    EndDate = new DateTime(2024, 9, 30),
+                    StartDate = new DateTime(2023, 1, 1,0, 0, 0, DateTimeKind.Utc),
+                    EndDate = new DateTime(2024, 9, 30,0, 0, 0, DateTimeKind.Utc),
                     Description = "Worked on RESTful API development, database optimization, and system integration.",
                     CreatedAt = DateTime.UtcNow,
                     IsDeleted = false
@@ -148,7 +148,8 @@ public static class DbSeeder
                     UserId = _userGuid,
                     Company = "PT ASTRA International TBK",
                     Role = ".NET Developer",
-                    StartDate = new DateTime(2024, 10, 1),
+                    StartDate = new DateTime(2024, 10, 1,0, 0, 0, DateTimeKind.Utc),
+                    EndDate = null,
                     Description = "Developed internal tools using .NET, and maintained legacy systems.",
                     CreatedAt = DateTime.UtcNow,
                     IsDeleted = false
