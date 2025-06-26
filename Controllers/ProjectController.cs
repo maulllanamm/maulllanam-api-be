@@ -24,6 +24,17 @@ public class ProjectController: ControllerBase
         return Ok(projects);
     }
     
+    [HttpGet ("{id}")]
+    public async Task<ActionResult<IEnumerable<Project>>> GetProjectById(Guid id)
+    {
+        var project = await _projectService.GetByIdAsync(id);
+        if (project == null)
+        {
+            return NotFound();
+        }
+        return Ok(project);
+    }
+    
    
     [HttpPost]
     public async Task<ActionResult<Project>> CreateProject([FromBody] CreateProjectlDTO project)
