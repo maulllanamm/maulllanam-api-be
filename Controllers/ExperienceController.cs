@@ -1,3 +1,4 @@
+using maulllanam_api_be.DTO;
 using maulllanam_api_be.Entity;
 using maulllanam_api_be.Service;
 using Microsoft.AspNetCore.Mvc;
@@ -33,4 +34,20 @@ public class ExperienceController: ControllerBase
         return Ok(experience);
     }
   
+    [HttpPost]
+    public async Task<ActionResult<Experience>> CreateExperience([FromBody] CreateExperienceDTO experience)
+    {
+        
+        var experienceEntity = new Experience
+        {
+            UserId = experience.UserId,
+            Company = experience.Company,
+            Role = experience.Role,
+            StartDate = experience.StartDate,
+            EndDate  = experience.EndDate,
+            Description = experience.Description,
+        };
+        var createdExperience = await _experienceService.CreateAsync(experienceEntity);
+        return Ok(createdExperience);
+    }
 }
