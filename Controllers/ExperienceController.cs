@@ -8,8 +8,13 @@ namespace maulllanam_api_be.Controllers;
 [Route("api/experiences")]
 public class ExperienceController: ControllerBase
 {
-   private readonly IExperienceService _experienceService;
-    
+    private readonly IExperienceService _experienceService;
+
+    public ExperienceController(IExperienceService experienceService)
+    {
+        _experienceService = experienceService;
+    }
+
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Experience>>> GetExperiences()
     {
