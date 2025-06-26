@@ -72,4 +72,28 @@ public class ProjectController: ControllerBase
         await _projectService.UpdateAsync(projectEntity);
         return NoContent();
     }
+    
+    [HttpDelete("{id}")]
+    public async Task<ActionResult<bool>> SoftDeleteProject(Guid id)
+    {
+        var project = await _projectService.GetByIdAsync(id);
+        if (id != project.Id)
+        {
+            return BadRequest();
+        }
+
+        if (project == null)
+        {
+            return NotFound();
+        }
+
+        if (project.IsDeleted)
+        {
+            return BadRequest();
+        }
+        
+        
+        await _projectService.DeleteAsync(id);
+        return NoContent();
+    }
 }
