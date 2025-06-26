@@ -71,4 +71,28 @@ public class ExperienceController: ControllerBase
         await _experienceService.UpdateAsync(experienceEntity);
         return NoContent();
     }
+    
+    [HttpDelete("{id}")]
+    public async Task<ActionResult<bool>> SoftDeleteExperience(Guid id)
+    {
+        var experience = await _experienceService.GetByIdAsync(id);
+        if (id != experience.Id)
+        {
+            return BadRequest();
+        }
+
+        if (experience == null)
+        {
+            return NotFound();
+        }
+
+        if (experience.IsDeleted)
+        {
+            return BadRequest();
+        }
+        
+        
+        await _experienceService.DeleteAsync(id);
+        return NoContent();
+    }
 }
