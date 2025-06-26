@@ -22,5 +22,15 @@ public class ExperienceController: ControllerBase
         return Ok(experience);
     }
     
+    [HttpGet ("{id}")]
+    public async Task<ActionResult<IEnumerable<Experience>>> GetExperienceById(Guid id)
+    {
+        var experience = await _experienceService.GetByIdAsync(id);
+        if (experience == null)
+        {
+            return NotFound();
+        }
+        return Ok(experience);
+    }
   
 }
