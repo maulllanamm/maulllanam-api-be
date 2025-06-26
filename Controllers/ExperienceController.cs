@@ -50,4 +50,25 @@ public class ExperienceController: ControllerBase
         var createdExperience = await _experienceService.CreateAsync(experienceEntity);
         return Ok(createdExperience);
     }
+    
+    [HttpPut("{id}")]
+    public async Task<ActionResult<IEnumerable<Experience>>> UpdateExperience(Guid id, [FromBody] UpdateExperienceDTO experience)
+    {
+        if (id != experience.Id)
+        {
+            return BadRequest();
+        }
+        var experienceEntity = new Experience
+        {
+            Id = id,
+            UserId = experience.UserId,
+            Company = experience.Company,
+            Role = experience.Role,
+            StartDate = experience.StartDate,
+            EndDate  = experience.EndDate,
+            Description = experience.Description,
+        };
+        await _experienceService.UpdateAsync(experienceEntity);
+        return NoContent();
+    }
 }
