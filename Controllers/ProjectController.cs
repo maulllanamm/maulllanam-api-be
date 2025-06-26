@@ -52,4 +52,24 @@ public class ProjectController: ControllerBase
         var createdProject = await _projectService.CreateAsync(projectRntity);
         return Ok(createdProject);
     }
+    
+    [HttpPut("{id}")]
+    public async Task<ActionResult<IEnumerable<Project>>> UpdateProject(Guid id, [FromBody] UpdateProjectDTO project)
+    {
+        if (id != project.Id)
+        {
+            return BadRequest();
+        }
+        var projectEntity = new Project
+        {
+            Id = id,
+            UserId = project.UserId,
+            Title = project.Title,
+            Url = project.Url,
+            Tech = JsonSerializer.Serialize(project.Tech),
+            Description = project.Description,
+        };
+        await _projectService.UpdateAsync(projectEntity);
+        return NoContent();
+    }
 }
