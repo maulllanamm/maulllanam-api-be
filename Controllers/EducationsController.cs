@@ -7,11 +7,11 @@ namespace maulllanam_api_be.Controllers;
 
 [ApiController]
 [Route("api/educations")]
-public class EducationController: ControllerBase
+public class EducationsController: ControllerBase
 {
     private readonly IEducationService _service;
 
-    public EducationController(IEducationService service)
+    public EducationsController(IEducationService service)
     {
         _service = service;
     }

@@ -7,11 +7,11 @@ namespace maulllanam_api_be.Controllers;
 
 [ApiController]
 [Route("api/skills")]
-public class SkillController: ControllerBase
+public class SkillsController: ControllerBase
 {
     private readonly ISkillService _skillService;
 
-    public SkillController(ISkillService skillService)
+    public SkillsController(ISkillService skillService)
     {
         _skillService = skillService;
     }

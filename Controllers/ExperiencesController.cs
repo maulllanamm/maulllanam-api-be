@@ -7,11 +7,11 @@ namespace maulllanam_api_be.Controllers;
 
 [ApiController]
 [Route("api/experiences")]
-public class ExperienceController: ControllerBase
+public class ExperiencesController: ControllerBase
 {
     private readonly IExperienceService _experienceService;
 
-    public ExperienceController(IExperienceService experienceService)
+    public ExperiencesController(IExperienceService experienceService)
     {
         _experienceService = experienceService;
     }
