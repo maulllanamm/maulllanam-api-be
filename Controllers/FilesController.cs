@@ -2,6 +2,7 @@ using maulllanam_api_be.DTO;
 using maulllanam_api_be.Entity;
 using maulllanam_api_be.Service;
 using Microsoft.AspNetCore.Mvc;
+using File = maulllanam_api_be.Entity.File;
 
 namespace maulllanam_api_be.Controllers;
 
@@ -14,6 +15,13 @@ public class FilesController: ControllerBase
     public FilesController(IFileService fileService)
     {
         _fileService = fileService;
+    }
+    
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<FileDTO>>> GetExperiences()
+    {
+        var files = await _fileService.GetAllAsync();
+        return Ok(files);
     }
     
     [HttpGet("{id}/download")]

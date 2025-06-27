@@ -29,8 +29,25 @@ public class FileService : BaseService<File>, IFileService
             Directory.CreateDirectory(_uploadPath);
         }
     }
-    
-    
+
+
+    public async Task<IEnumerable<FileDTO>> GetAllAsync()
+    {
+        return await _context.Files
+            .AsNoTracking()
+            .Where(x => !x.IsDeleted)
+            .OrderByDescending(x => x.CreatedAt)
+            .Select(x => new FileDTO
+            {
+                Id = x.Id,
+                ContentType = x.ContentType,
+                FileSize = x.FileSize,
+                OriginalFileName = x.OriginalFileName,
+                UploadedAt = x.CreatedAt
+            })
+            .ToListAsync();
+    }
+
 
     public async Task<FileUploadResponseDTO> UploadFileAsync(IFormFile file, string? uploadedBy = null)
     {
