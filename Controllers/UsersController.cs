@@ -23,7 +23,10 @@ public class UsersController: ControllerBase
             u => !u.IsDeleted, 
             u => u.SocialMedias, 
             u => u.Skills,
-            u => u.Projects);
+            u => u.Projects,
+            u => u.Educations,
+            u => u.Experiences,
+            u => u.Certificates);
         return Ok(users);
     }
     
@@ -33,7 +36,11 @@ public class UsersController: ControllerBase
         var user = await _userService.GetByIdWithIncludeAsync(id, 
             u => !u.IsDeleted, 
             u=> u.SocialMedias,
-            u => u.Skills);
+            u => u.Skills,
+            u => u.Projects,
+            u => u.Educations,
+            u => u.Experiences,
+            u => u.Certificates);
         if (user == null)
         {
             return NotFound();

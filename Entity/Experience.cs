@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace maulllanam_api_be.Entity;
 
 public class Experience : BaseEntity
@@ -10,5 +12,6 @@ public class Experience : BaseEntity
     public DateTime? EndDate { get; set; } 
     public string? Description { get; set; }
 
+    [JsonIgnore]
     public User User { get; set; } = null!;
 }

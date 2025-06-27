@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace maulllanam_api_be.Entity;
 
 public class Certificate : BaseEntity
@@ -9,5 +11,6 @@ public class Certificate : BaseEntity
     public DateTime DateIssued { get; set; }
     public string? Url { get; set; }
 
+    [JsonIgnore]
     public User User { get; set; } = null!;
 }
