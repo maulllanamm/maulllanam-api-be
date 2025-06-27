@@ -1,5 +1,6 @@
 using maulllanam_api_be.Entity;
 using Microsoft.EntityFrameworkCore;
+using File = maulllanam_api_be.Entity.File;
 
 namespace maulllanam_api_be.Database;
 
@@ -19,6 +20,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<Education> Educations { get; set; }
     public DbSet<Experience> Experiences { get; set; }
     public DbSet<Certificate> Certificates { get; set; }
+    public DbSet<File> Files { get; set; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -211,7 +213,43 @@ public class ApplicationDbContext : DbContext
                 .OnDelete(DeleteBehavior.Cascade);
         });
 
+        modelBuilder.Entity<File>(entity =>
+        {
+            entity.ToTable("files");
 
+            entity.HasKey(f => f.Id);
+
+            entity.Property(f => f.OriginalFileName)
+                .IsRequired()
+                .HasMaxLength(255);
+
+            entity.Property(f => f.StoredFileName)
+                .IsRequired()
+                .HasMaxLength(255);
+
+            entity.Property(f => f.ContentType)
+                .IsRequired()
+                .HasMaxLength(100);
+
+            entity.Property(f => f.FileSize)
+                .IsRequired();
+
+            entity.Property(f => f.FilePath)
+                .IsRequired()
+                .HasMaxLength(500);
+
+            entity.Property(f => f.FileHash)
+                .HasMaxLength(128);
+
+            entity.Property(f => f.CreatedAt)
+                .IsRequired();
+
+            entity.Property(f => f.UpdatedAt)
+                .IsRequired(false);
+
+            entity.Property(f => f.IsDeleted)
+                .IsRequired();
+        });
 
     }
     
