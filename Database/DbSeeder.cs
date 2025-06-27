@@ -23,6 +23,7 @@ public static class DbSeeder
         await SeedProjects(db);
         await SeedEducations(db);
         await SeedExperiences(db);
+        await SeedCertificates(db);
     }
 
     private static async Task SeedUsers(ApplicationDbContext db)
@@ -159,6 +160,48 @@ public static class DbSeeder
             await db.SaveChangesAsync();
         }
     }
+    private static async Task SeedCertificates(ApplicationDbContext db)
+    {
+        if (!db.Certificates.Any())
+        {
+            var now = DateTime.UtcNow;
 
+            var certificates = new List<Certificate>
+            {
+                new Certificate { Id = Guid.NewGuid(), UserId = _userGuid, Name = "Belajar Dasar Pemrograman JavaScript", IssuedBy = "Dicoding Indonesia", DateIssued = new DateTime(2022, 8, 31, 0, 0, 0, DateTimeKind.Utc), Url = "https://drive.google.com/file/d/1OFrPm8UZYKMcp0-A1Gzg1Rgm_CRqldru/view?usp=share_link", CreatedAt = now, IsDeleted = false },
+                new Certificate { Id = Guid.NewGuid(), UserId = _userGuid, Name = "Belajar Fundamental Aplikasi Web dengan React", IssuedBy = "Dicoding Indonesia", DateIssued = new DateTime(2024, 8, 19, 0, 0, 0, DateTimeKind.Utc), Url = "https://drive.google.com/file/d/1B-lzQIr44-0Ru9BjCIC6tJ68t4t_Dfso/view?usp=share_link", CreatedAt = now, IsDeleted = false },
+                new Certificate { Id = Guid.NewGuid(), UserId = _userGuid, Name = "Belajar Dasar Pemrograman Web", IssuedBy = "Dicoding Indonesia", DateIssued = new DateTime(2024, 7, 22, 0, 0, 0, DateTimeKind.Utc), Url = "https://drive.google.com/file/d/1HKApXdspwx3lrVkrX14ZHoNdr5w3dpAt/view?usp=share_link", CreatedAt = now, IsDeleted = false },
+                new Certificate { Id = Guid.NewGuid(), UserId = _userGuid, Name = "Belajar Membuat Aplikasi Web dengan React", IssuedBy = "Dicoding Indonesia", DateIssued = new DateTime(2022, 9, 7, 0, 0, 0, DateTimeKind.Utc), Url = "https://drive.google.com/file/d/1TtWYlWEBQduKzfFXEJFsF03M_n-aH6HJ/view?usp=share_link", CreatedAt = now, IsDeleted = false },
+                new Certificate { Id = Guid.NewGuid(), UserId = _userGuid, Name = "Belajar Membuat Front-End Web untuk Pemula", IssuedBy = "Dicoding Indonesia", DateIssued = new DateTime(2024, 7, 23, 0, 0, 0, DateTimeKind.Utc), Url = "https://drive.google.com/file/d/1rUzkyhP44xQDPdZbiHwVTyEYHZofeJKS/view?usp=share_link", CreatedAt = now, IsDeleted = false },
+
+                new Certificate { Id = Guid.NewGuid(), UserId = _userGuid, Name = "Architecting on AWS (Membangun Arsitektur Cloud di AWS)", IssuedBy = "Dicoding Indonesia", DateIssued = new DateTime(2024, 7, 28, 0, 0, 0, DateTimeKind.Utc), Url = "https://drive.google.com/file/d/133bio_QA-ISnVaZFkuWgXvIrqNP36_Zg/view?usp=share_link", CreatedAt = now, IsDeleted = false },
+                new Certificate { Id = Guid.NewGuid(), UserId = _userGuid, Name = "Belajar Back-End Pemula dengan JavaScript", IssuedBy = "Dicoding Indonesia", DateIssued = new DateTime(2024, 7, 20, 0, 0, 0, DateTimeKind.Utc), Url = "https://drive.google.com/file/d/1ZOP6j7Y1OCtKam9Poc6g73VAKAm3sVIT/view?usp=share_link", CreatedAt = now, IsDeleted = false },
+                new Certificate { Id = Guid.NewGuid(), UserId = _userGuid, Name = "Belajar Fundamental Back-End dengan JavaScript", IssuedBy = "Dicoding Indonesia", DateIssued = new DateTime(2024, 8, 1, 0, 0, 0, DateTimeKind.Utc), Url = "https://drive.google.com/file/d/1fOjj7hWNQqEMy5KeL-EvwyD8O3VLBcrJ/view?usp=share_link", CreatedAt = now, IsDeleted = false },
+                new Certificate { Id = Guid.NewGuid(), UserId = _userGuid, Name = "Belajar Prinsip Pemrograman SOLID", IssuedBy = "Dicoding Indonesia", DateIssued = new DateTime(2023, 7, 17, 0, 0, 0, DateTimeKind.Utc), Url = "https://drive.google.com/file/d/17NnjCHFCtS3S0gCN-E0v2lGw9gkYRTKm/view?usp=share_link", CreatedAt = now, IsDeleted = false },
+                new Certificate { Id = Guid.NewGuid(), UserId = _userGuid, Name = "Cloud Practitioner Essentials (Belajar Dasar AWS Cloud)", IssuedBy = "Dicoding Indonesia", DateIssued = new DateTime(2024, 7, 18, 0, 0, 0, DateTimeKind.Utc), Url = "https://drive.google.com/file/d/1yUwMVPJfe0B0souasl_6ID7ghkB1iZPJ/view?usp=share_link", CreatedAt = now, IsDeleted = false },
+                new Certificate { Id = Guid.NewGuid(), UserId = _userGuid, Name = "Menjadi Node.js Application Developer", IssuedBy = "Dicoding Indonesia", DateIssued = new DateTime(2024, 7, 27, 0, 0, 0, DateTimeKind.Utc), Url = "https://drive.google.com/file/d/1-eE0BNhy94gnMRUJ5M-wvA6FNYH4iGSe/view?usp=share_link", CreatedAt = now, IsDeleted = false },
+
+                new Certificate { Id = Guid.NewGuid(), UserId = _userGuid, Name = "Belajar Dasar-Dasar DevOps", IssuedBy = "Dicoding Indonesia", DateIssued = new DateTime(2024, 7, 21, 0, 0, 0, DateTimeKind.Utc), Url = "https://drive.google.com/file/d/1V4YxQ9iRGfawm9JF3vlCa2d4Z4I_lVNu/view?usp=share_link", CreatedAt = now, IsDeleted = false },
+                new Certificate { Id = Guid.NewGuid(), UserId = _userGuid, Name = "Belajar Jaringan Komputer untuk Pemula", IssuedBy = "Dicoding Indonesia", DateIssued = new DateTime(2024, 7, 23, 0, 0, 0, DateTimeKind.Utc), Url = "https://drive.google.com/file/d/1K1o4pI4oZoLpo23xpcGcok6M-Pp4IBAq/view?usp=share_link", CreatedAt = now, IsDeleted = false },
+                new Certificate { Id = Guid.NewGuid(), UserId = _userGuid, Name = "Menjadi Linux System Administrator", IssuedBy = "Dicoding Indonesia", DateIssued = new DateTime(2024, 7, 25, 0, 0, 0, DateTimeKind.Utc), Url = "https://drive.google.com/file/d/1hhYZ_6043vkovs3PwbhrpY5CAzcoqMl5/view?usp=share_link", CreatedAt = now, IsDeleted = false },
+
+                new Certificate { Id = Guid.NewGuid(), UserId = _userGuid, Name = "Belajar Dasar Google Cloud", IssuedBy = "Dicoding Indonesia", DateIssued = new DateTime(2024, 8, 1, 0, 0, 0, DateTimeKind.Utc), Url = "https://drive.google.com/file/d/1b5zA6pPuqrKFwXyQe588bxjqgnbDpGuL/view?usp=share_link", CreatedAt = now, IsDeleted = false },
+                new Certificate { Id = Guid.NewGuid(), UserId = _userGuid, Name = "Belajar Membuat Aplikasi Back-End untuk Pemula dengan Google Cloud", IssuedBy = "Dicoding Indonesia", DateIssued = new DateTime(2024, 8, 11, 0, 0, 0, DateTimeKind.Utc), Url = "https://drive.google.com/file/d/1xk_exDmHUf7b5rN1vdf6dUcmIa5zV6z3/view?usp=share_link", CreatedAt = now, IsDeleted = false },
+                new Certificate { Id = Guid.NewGuid(), UserId = _userGuid, Name = "Menjadi Google Cloud Engineer", IssuedBy = "Dicoding Indonesia", DateIssued = new DateTime(2024, 8, 16, 0, 0, 0, DateTimeKind.Utc), Url = "https://drive.google.com/file/d/1C-KfnqwfPFVGRniTRvNQSeIzlJXarcvf/view?usp=share_link", CreatedAt = now, IsDeleted = false },
+                
+                new Certificate { Id = Guid.NewGuid(), UserId = _userGuid, Name = "Elementary Levels", IssuedBy = "Lembaga Bahasa LIA", DateIssued = new DateTime(2018, 3, 23, 0, 0, 0, DateTimeKind.Utc), Url = "https://drive.google.com/file/d/1zBQqdCt65oPJDhjz-NXVzd8hWlmAChu4/view?usp=share_link", CreatedAt = now, IsDeleted = false },
+                new Certificate { Id = Guid.NewGuid(), UserId = _userGuid, Name = "Intermediate Levels", IssuedBy = "Lembaga Bahasa LIA", DateIssued = new DateTime(2019, 12, 19, 0, 0, 0, DateTimeKind.Utc), Url = "https://drive.google.com/file/d/1C1A14Z0_gTGAPnjIjb3YxBdH7e5aGtbg/view?usp=share_link", CreatedAt = now, IsDeleted = false }
+            };
+
+            db.Certificates.AddRange(certificates);
+            await db.SaveChangesAsync();
+        }
+    }
 
 }
+
+
+
+
+
+
