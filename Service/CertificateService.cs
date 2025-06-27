@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace maulllanam_api_be.Service;
 
-public class CertificatesService :  BaseService<Certificate>, ICertificatesService
+public class CertificateService :  BaseService<Certificate>, ICertificateService
 {
     private readonly ApplicationDbContext _context;
 
-    public CertificatesService(ApplicationDbContext context) : base(context)
+    public CertificateService(ApplicationDbContext context) : base(context)
     {
         _context = context;
     }

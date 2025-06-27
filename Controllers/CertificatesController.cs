@@ -9,9 +9,9 @@ namespace maulllanam_api_be.Controllers;
 [Route("api/certificates")]
 public class CertificatesController: ControllerBase
 {
-    private readonly ICertificatesService _service;
+    private readonly ICertificateService _service;
 
-    public CertificatesController(ICertificatesService service)
+    public CertificatesController(ICertificateService service)
     {
         _service = service;
     }
