@@ -59,5 +59,25 @@ public class FilesController: ControllerBase
             return StatusCode(500, "Internal server error occurred while uploading file");
         }
     }
+    
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteFile(Guid id)
+    {
+        try
+        {
+            var result = await _fileService.DeleteFileAsync(id);
+                
+            if (!result)
+            {
+                return NotFound("File not found");
+            }
+
+            return NoContent();
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, "Internal server error occurred while deleting file");
+        }
+    }
 
 }

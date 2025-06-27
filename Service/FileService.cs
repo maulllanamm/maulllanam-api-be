@@ -161,4 +161,29 @@ public class FileService : BaseService<File>, IFileService
         var hashBytes = await Task.Run(() => sha256.ComputeHash(stream));
         return Convert.ToBase64String(hashBytes);
     }
+    
+    public async Task<bool> DeleteFileAsync(Guid fileId)
+    {
+        var fileEntity = await _context.Files
+            .FirstOrDefaultAsync(f => f.Id == fileId && !f.IsDeleted);
+
+        if (fileEntity == null)
+        {
+            return false;
+        }
+
+        // Soft delete
+        fileEntity.IsDeleted = true;
+        fileEntity.UpdatedAt = DateTime.UtcNow;
+
+        await _context.SaveChangesAsync();
+
+        // Optional: Delete physical file
+        if (System.IO.File.Exists(fileEntity.FilePath))
+        {
+            System.IO.File.Delete(fileEntity.FilePath);
+        }
+
+        return true;
+    }
 }
