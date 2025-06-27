@@ -1,4 +1,3 @@
-using maulllanam_api_be.DTO;
 using maulllanam_api_be.Entity;
 using maulllanam_api_be.Service;
 using Microsoft.AspNetCore.Mvc;
@@ -15,4 +14,12 @@ public class CertificatesController: ControllerBase
     {
         _service = service;
     }
+    
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<Certificate>>> GetCertificate()
+    {
+        var certificates = await _service.GetAllAsync();
+        return Ok(certificates);
+    }
+
 }
