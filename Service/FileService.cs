@@ -1,3 +1,4 @@
+using System.Net;
 using System.Security.Cryptography;
 using maulllanam_api_be.Database;
 using maulllanam_api_be.DTO;
@@ -28,6 +29,8 @@ public class FileService : BaseService<File>, IFileService
             Directory.CreateDirectory(_uploadPath);
         }
     }
+    
+    
 
     public async Task<FileUploadResponseDTO> UploadFileAsync(IFormFile file, string? uploadedBy = null)
     {
@@ -95,6 +98,27 @@ public class FileService : BaseService<File>, IFileService
                 UploadedAt = fileEntity.CreatedAt,
                 Message = "File uploaded successfully"
             };
+    }
+
+    public async Task<FileDownloadResponseDTO?> GetFileAsync(Guid fileId)
+    {
+        var fileEntity = await _context.Files
+            .FirstOrDefaultAsync(f => f.Id == fileId && !f.IsDeleted);
+       
+        if (fileEntity == null || !System.IO.File.Exists(fileEntity.FilePath))
+        {
+            return null;
+        }
+
+        var fileStream = new FileStream(fileEntity.FilePath, FileMode.Open, FileAccess.Read);
+
+        return new FileDownloadResponseDTO()
+        {
+            FileStream = fileStream,
+            ContentType = fileEntity.ContentType,
+            FileName = fileEntity.OriginalFileName,
+            FileSize = fileEntity.FileSize
+        };
     }
 
     private (bool IsValid, string ErrorMessage) ValidateFile(IFormFile file)

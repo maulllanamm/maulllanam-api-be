@@ -16,6 +16,26 @@ public class FilesController: ControllerBase
         _fileService = fileService;
     }
     
+    [HttpGet("{id}/download")]
+    public async Task<IActionResult> DownloadFile(Guid id)
+    {
+        try
+        {
+            var result = await _fileService.GetFileAsync(id);
+                
+            if (result == null)
+            {
+                return NotFound("File not found");
+            }
+
+            return File(result.FileStream, result.ContentType, result.FileName);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, "Internal server error occurred while downloading file");
+        }
+    }
+    
     [HttpPost("upload")]
     [RequestSizeLimit(10485760)] // 10MB
     public async Task<ActionResult<FileUploadResponseDTO>> UploadFile(IFormFile file)

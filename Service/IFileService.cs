@@ -7,4 +7,5 @@ namespace maulllanam_api_be.Service;
 public interface IFileService: IBaseService<File>
 {
     Task<FileUploadResponseDTO> UploadFileAsync(IFormFile file, string? uploadedBy = null);
+    Task<FileDownloadResponseDTO?> GetFileAsync(Guid fileId);
 }
