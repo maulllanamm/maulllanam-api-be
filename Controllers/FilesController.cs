@@ -1,0 +1,43 @@
+using maulllanam_api_be.DTO;
+using maulllanam_api_be.Entity;
+using maulllanam_api_be.Service;
+using Microsoft.AspNetCore.Mvc;
+
+namespace maulllanam_api_be.Controllers;
+
+[ApiController]
+[Route("api/files")]
+public class FilesController: ControllerBase
+{
+    private readonly IFileService _fileService;
+
+    public FilesController(IFileService fileService)
+    {
+        _fileService = fileService;
+    }
+    
+    [HttpPost("upload")]
+    [RequestSizeLimit(10485760)] // 10MB
+    public async Task<ActionResult<FileUploadResponseDTO>> UploadFile(IFormFile file)
+    {
+        try
+        {
+            if (file == null)
+            {
+                return BadRequest("No file provided");
+            }
+
+            var result = await _fileService.UploadFileAsync(file);
+            return Ok(result);
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, "Internal server error occurred while uploading file");
+        }
+    }
+
+}

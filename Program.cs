@@ -27,7 +27,14 @@ builder.Services.AddScoped<IProjectService, ProjectService>();
 builder.Services.AddScoped<IEducationService, EducationService>();
 builder.Services.AddScoped<IExperienceService, ExperienceService>();
 builder.Services.AddScoped<ICertificateService, CertificateService>();
+builder.Services.AddScoped<IFileService, FileService>();
 builder.Services.AddScoped(typeof(IBaseService<>), typeof(BaseService<>));
+
+// Configure request size limits
+builder.Services.Configure<IISServerOptions>(options =>
+{
+    options.MaxRequestBodySize = 104857600; // 100MB
+});
 
 // 4. Add controllers and API services
 builder.Services.AddControllers();
