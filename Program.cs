@@ -26,6 +26,7 @@ builder.Services.AddScoped<ISkillService, SkillService>();
 builder.Services.AddScoped<IProjectService, ProjectService>();
 builder.Services.AddScoped<IEducationService, EducationService>();
 builder.Services.AddScoped<IExperienceService, ExperienceService>();
+builder.Services.AddScoped<ICertificatesService, CertificatesService>();
 builder.Services.AddScoped(typeof(IBaseService<>), typeof(BaseService<>));
 
 // 4. Add controllers and API services
