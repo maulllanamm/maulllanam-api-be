@@ -43,7 +43,7 @@ public static class DbSeeder
             Email = "maulllanamuhammad@gmail.com",
             Title = ".NET Developer",
             Phone = "081395007665",
-            Summary = "Hallo, Nama saya Maulana Muhammad, seorang .NET Developer yang sudah memiliki pengalaman selama lebih dari 2 tahun",
+            Summary = "A highly motivated and results-driven .NET Developer with 3 years of professional experience, specializing in backend development. Proficient in building robust and scalable applications using .NET, PostgreSQL, Redis, and Docker. Comfortable working in cross-functional teams and large-scale environments, with a solid understanding of frontend development, DevOps practices, and computer networking. Passionate about continuous learning and aiming to grow into a Senior Engineer or Tech Lead role.",
             CreatedAt = DateTime.UtcNow,
             IsDeleted = false
         };
@@ -95,11 +95,41 @@ public static class DbSeeder
     {
         if (!db.Projects.Any())
         {
-            var tech = new List<string> { "React", "Tailwind", ".NET Core" };
             db.Projects.AddRange(new List<Project>
             {
-                new Project { Id = Guid.NewGuid(), UserId = _userGuid, Title = "BlockchainNet", Description = "Aplikasi simulasi blockchain sederhana yang dibuat dengan .NET Core", Tech = JsonSerializer.Serialize(tech) ,CreatedAt = DateTime.UtcNow, IsDeleted = false },
+                new Project
+                {
+                    Id = Guid.NewGuid(),
+                    UserId = _userGuid,
+                    Title = "BlockchainNet",
+                    Description = "A simplified blockchain simulation application developed using .NET Core, designed to demonstrate the fundamental concepts of blockchain such as block creation, hashing, and chain validation.",
+                    Tech = JsonSerializer.Serialize(new List<string> { "React", "Tailwind", ".NET Core" }),
+                    CreatedAt = DateTime.UtcNow,
+                    IsDeleted = false
+                },
+                new Project
+                {
+                    Id = Guid.NewGuid(),
+                    UserId = _userGuid,
+                    Title = "Simple Todo App",
+                    Description = "A basic to-do list web application built with React and Tailwind CSS, allowing users to add, edit, and delete tasks with a responsive user interface.",
+                    Tech = JsonSerializer.Serialize(new List<string> { "React", "Tailwind" }),
+                    CreatedAt = DateTime.UtcNow,
+                    IsDeleted = false
+                },
+                new Project
+                {
+                    Id = Guid.NewGuid(),
+                    UserId = _userGuid,
+                    Title = "MTerm",
+                    Description = "A personal portfolio website designed with a terminal-style user interface. Built with React and .NET Core 8, and integrated with PostgreSQL for structured backend data management.",
+                    Tech = JsonSerializer.Serialize(new List<string> { "React", "Tailwind", ".NET Core 8", "PostgreSQL" }),
+                    CreatedAt = DateTime.UtcNow,
+                    IsDeleted = false
+                },
+
             });
+
 
             await db.SaveChangesAsync();
         }
@@ -135,26 +165,41 @@ public static class DbSeeder
                 {
                     Id = Guid.NewGuid(),
                     UserId = _userGuid,
-                    Company = "PT Beit Tiwikrama",
-                    Role = "Backend Developer",
-                    StartDate = new DateTime(2023, 1, 1,0, 0, 0, DateTimeKind.Utc),
-                    EndDate = new DateTime(2024, 9, 30,0, 0, 0, DateTimeKind.Utc),
-                    Description = "Worked on RESTful API development, database optimization, and system integration.",
+                    Company = "PT ASTRA International Tbk",
+                    Role = ".NET Developer",
+                    StartDate = new DateTime(2024, 10, 1, 0, 0, 0, DateTimeKind.Utc),
+                    EndDate = null,
+                    Description = "Designing and developing internal enterprise tools using .NET 6 to enhance operational efficiency. Responsible for maintaining and modernizing legacy systems, implementing RESTful APIs, and collaborating with cross-functional teams to deliver scalable backend solutions aligned with business requirements.",
                     CreatedAt = DateTime.UtcNow,
                     IsDeleted = false
                 },
+                
                 new Experience
                 {
                     Id = Guid.NewGuid(),
                     UserId = _userGuid,
-                    Company = "PT ASTRA International TBK",
-                    Role = ".NET Developer",
-                    StartDate = new DateTime(2024, 10, 1,0, 0, 0, DateTimeKind.Utc),
-                    EndDate = null,
-                    Description = "Developed internal tools using .NET, and maintained legacy systems.",
+                    Company = "PT Beit Tiwikrama",
+                    Role = "Backend Developer",
+                    StartDate = new DateTime(2023, 1, 1, 0, 0, 0, DateTimeKind.Utc),
+                    EndDate = new DateTime(2024, 9, 30, 0, 0, 0, DateTimeKind.Utc),
+                    Description = "Developed and maintained RESTful APIs. Optimized database performance using PostgreSQL, implemented business logic in .NET Core, and integrated third-party services. Collaborated closely with frontend developers to ensure seamless system functionality and deployment.",
                     CreatedAt = DateTime.UtcNow,
                     IsDeleted = false
-                }
+                },
+
+
+                new Experience
+                {
+                    Id = Guid.NewGuid(),
+                    UserId = _userGuid,
+                    Company = "RS UMMI Bogor",
+                    Role = "Backend Developer",
+                    StartDate = new DateTime(2022, 6, 1, 0, 0, 0, DateTimeKind.Utc),
+                    EndDate = new DateTime(2022, 11, 30, 0, 0, 0, DateTimeKind.Utc),
+                    Description = "Developed and maintained an academic information system using CodeIgniter 3. optimizing MySQL queries, and ensuring smooth backend functionality to support academic operations.",
+                    CreatedAt = DateTime.UtcNow,
+                    IsDeleted = false
+                },
             });
 
             await db.SaveChangesAsync();
