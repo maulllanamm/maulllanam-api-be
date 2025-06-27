@@ -18,6 +18,7 @@ public class ApplicationDbContext : DbContext
     
     public DbSet<Education> Educations { get; set; }
     public DbSet<Experience> Experiences { get; set; }
+    public DbSet<Certificate> Certificates { get; set; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -183,6 +184,33 @@ public class ApplicationDbContext : DbContext
                 .HasForeignKey(e => e.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
         });
+        
+        modelBuilder.Entity<Certificate>(entity =>
+        {
+            entity.ToTable("certificates");
+
+            entity.HasKey(c => c.Id);
+
+            entity.Property(c => c.Name)
+                .IsRequired()
+                .HasMaxLength(200);
+
+            entity.Property(c => c.IssuedBy)
+                .IsRequired()
+                .HasMaxLength(150);
+
+            entity.Property(c => c.Url)
+                .HasMaxLength(500);
+
+            entity.Property(c => c.DateIssued)
+                .IsRequired();
+
+            entity.HasOne(c => c.User)
+                .WithMany(u => u.Certificates)
+                .HasForeignKey(c => c.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+
 
 
     }

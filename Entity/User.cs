@@ -14,6 +14,7 @@ public class User : BaseEntity
     public ICollection<Project> Projects { get; set; } = new List<Project>();
     public ICollection<Education> Educations { get; set; } = new List<Education>();
     public ICollection<Experience> Experiences { get; set; } = new List<Experience>();
+    public ICollection<Certificate> Certificates { get; set; } = new List<Certificate>();
 
 
 }
