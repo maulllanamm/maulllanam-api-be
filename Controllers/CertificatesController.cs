@@ -22,4 +22,14 @@ public class CertificatesController: ControllerBase
         return Ok(certificates);
     }
 
+    [HttpGet ("{id}")]
+    public async Task<ActionResult<IEnumerable<Certificate>>> GetCertificateById(Guid id)
+    {
+        var certificate = await _service.GetByIdAsync(id);
+        if (certificate == null)
+        {
+            return NotFound();
+        }
+        return Ok(certificate);
+    }   
 }
