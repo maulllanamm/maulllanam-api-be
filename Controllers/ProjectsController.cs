@@ -35,6 +35,18 @@ public class ProjectsController: ControllerBase
         return Ok(project);
     }
     
+    [HttpGet]
+    [Route("{id}/user")]
+    public async Task<ActionResult<IEnumerable<Project>>> GetProjectByUserId(Guid id)
+    {
+        var project = await _projectService.GetByUserIdAsync<Project>(id);
+        if (!project.Any())
+        {
+            return NotFound();
+        }
+        return Ok(project);
+    }
+    
    
     [HttpPost]
     public async Task<ActionResult<Project>> CreateProject([FromBody] CreateProjectlDTO project)
