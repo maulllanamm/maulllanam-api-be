@@ -11,11 +11,12 @@ public class UsersController: ControllerBase
 {
     private readonly IUserService _userService;
     private readonly ISocialMediaService _socialMediaService;
-
-    public UsersController(IUserService userService, ISocialMediaService socialMediaService)
+    private readonly ISkillService _skillService;
+    public UsersController(IUserService userService, ISocialMediaService socialMediaService, ISkillService skillService)
     {
         _userService = userService;
         _socialMediaService = socialMediaService;
+        _skillService = skillService;
     }
 
     [HttpGet]
@@ -72,6 +73,18 @@ public class UsersController: ControllerBase
             return NotFound();
         }
         return Ok(socialMedia);
+    }
+    
+    [HttpGet]
+    [Route("{userId}/skills")]
+    public async Task<ActionResult<IEnumerable<Skill>>> GetSkillByUserId(Guid userId)
+    {
+        var skills = await _skillService.GetByUserIdAsync<Skill>(userId);
+        if (!skills.Any())
+        {
+            return NotFound();
+        }
+        return Ok(skills);
     }
     
     [HttpPost]
