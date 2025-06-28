@@ -10,10 +10,12 @@ namespace maulllanam_api_be.Controllers;
 public class UsersController: ControllerBase
 {
     private readonly IUserService _userService;
+    private readonly ISocialMediaService _socialMediaService;
 
-    public UsersController(IUserService userService)
+    public UsersController(IUserService userService, ISocialMediaService socialMediaService)
     {
         _userService = userService;
+        _socialMediaService = socialMediaService;
     }
 
     [HttpGet]
@@ -58,6 +60,18 @@ public class UsersController: ControllerBase
             return NotFound();
         }
         return Ok(user);
+    }
+    
+    [HttpGet]
+    [Route("{userId}/social-medias")]
+    public async Task<ActionResult<IEnumerable<SocialMedia>>> GetSocialMediaByUserId(Guid userId)
+    {
+        var socialMedia = await _socialMediaService.GetByUserIdAsync<SocialMedia>(userId);
+        if (!socialMedia.Any())
+        {
+            return NotFound();
+        }
+        return Ok(socialMedia);
     }
     
     [HttpPost]

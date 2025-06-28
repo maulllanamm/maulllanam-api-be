@@ -34,17 +34,7 @@ public class SocialMediaController: ControllerBase
         return Ok(socialMedia);
     }
     
-    [HttpGet]
-    [Route("{id}/user")]
-    public async Task<ActionResult<IEnumerable<SocialMedia>>> GetSocialMediaByUserId(Guid id)
-    {
-        var socialMedia = await _socialMediaService.GetByUserIdAsync<SocialMedia>(id);
-        if (!socialMedia.Any())
-        {
-            return NotFound();
-        }
-        return Ok(socialMedia);
-    }
+
 
     [HttpPost]
     public async Task<ActionResult<SocialMedia>> CreateSocialMedia([FromBody] CreateSocialMediaDTO socialMediaDto)
