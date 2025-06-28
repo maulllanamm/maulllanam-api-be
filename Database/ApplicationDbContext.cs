@@ -240,6 +240,11 @@ public class ApplicationDbContext : DbContext
 
             entity.Property(f => f.FileHash)
                 .HasMaxLength(128);
+            
+            entity.HasOne(c => c.User)
+                .WithMany(u => u.Files)
+                .HasForeignKey(c => c.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             entity.Property(f => f.CreatedAt)
                 .IsRequired();

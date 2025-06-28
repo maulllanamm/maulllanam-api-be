@@ -18,7 +18,7 @@ public class FilesController: ControllerBase
     }
     
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<FileDTO>>> GetExperiences()
+    public async Task<ActionResult<IEnumerable<FileDTO>>> GetFiles()
     {
         var files = await _fileService.GetAllAsync();
         return Ok(files);
@@ -46,7 +46,7 @@ public class FilesController: ControllerBase
     
     [HttpPost("upload")]
     [RequestSizeLimit(10485760)] // 10MB
-    public async Task<ActionResult<FileUploadResponseDTO>> UploadFile(IFormFile file)
+    public async Task<ActionResult<FileUploadResponseDTO>> UploadFile(IFormFile file, Guid userId)
     {
         try
         {
@@ -55,7 +55,7 @@ public class FilesController: ControllerBase
                 return BadRequest("No file provided");
             }
 
-            var result = await _fileService.UploadFileAsync(file);
+            var result = await _fileService.UploadFileAsync(file, userId);
             return Ok(result);
         }
         catch (ArgumentException ex)

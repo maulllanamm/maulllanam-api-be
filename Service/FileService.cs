@@ -49,7 +49,7 @@ public class FileService : BaseService<File>, IFileService
     }
 
 
-    public async Task<FileUploadResponseDTO> UploadFileAsync(IFormFile file, string? uploadedBy = null)
+    public async Task<FileUploadResponseDTO> UploadFileAsync(IFormFile file, Guid userId)
     {
 
             var validation = ValidateFile(file);
@@ -92,6 +92,7 @@ public class FileService : BaseService<File>, IFileService
             // Save to database
             var fileEntity = new File
             {
+                UserId = userId,
                 OriginalFileName = file.FileName,
                 StoredFileName = storedFileName,
                 ContentType = file.ContentType,
