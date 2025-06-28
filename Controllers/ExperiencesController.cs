@@ -34,17 +34,7 @@ public class ExperiencesController: ControllerBase
         return Ok(experience);
     }
     
-    [HttpGet]
-    [Route("{id}/user")]
-    public async Task<ActionResult<IEnumerable<Experience>>> GetExperienceByUserId(Guid id)
-    {
-        var experience = await _experienceService.GetByUserIdAsync<Experience>(id);
-        if (!experience.Any())
-        {
-            return NotFound();
-        }
-        return Ok(experience);
-    }
+   
   
     [HttpPost]
     public async Task<ActionResult<Experience>> CreateExperience([FromBody] CreateExperienceDTO experience)
