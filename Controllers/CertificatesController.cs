@@ -49,4 +49,24 @@ public class CertificatesController: ControllerBase
         var createdCertificate = await _service.CreateAsync(certificateEntity);
         return Ok(createdCertificate);
     }
+    
+    [HttpPut("{id}")]
+    public async Task<ActionResult<IEnumerable<Certificate>>> UpdateCertificate(Guid id, [FromBody] UpdateCertificateDTO certificate)
+    {
+        if (id != certificate.Id)
+        {
+            return BadRequest();
+        }
+        var certificateEntity = new Certificate
+        {
+            Id = id,
+            UserId = certificate.UserId,
+            Name = certificate.Name,
+            IssuedBy = certificate.IssuedBy,
+            DateIssued = certificate.DateIssued,
+            Url = certificate.Url,
+        };
+        await _service.UpdateAsync(certificateEntity);
+        return NoContent();
+    }
 }
