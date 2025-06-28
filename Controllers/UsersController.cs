@@ -12,11 +12,13 @@ public class UsersController: ControllerBase
     private readonly IUserService _userService;
     private readonly ISocialMediaService _socialMediaService;
     private readonly ISkillService _skillService;
-    public UsersController(IUserService userService, ISocialMediaService socialMediaService, ISkillService skillService)
+    private readonly IProjectService _projectService;
+    public UsersController(IUserService userService, ISocialMediaService socialMediaService, ISkillService skillService, IProjectService projectService)
     {
         _userService = userService;
         _socialMediaService = socialMediaService;
         _skillService = skillService;
+        _projectService = projectService;
     }
 
     [HttpGet]
@@ -85,6 +87,18 @@ public class UsersController: ControllerBase
             return NotFound();
         }
         return Ok(skills);
+    }
+    
+    [HttpGet]
+    [Route("{userId}/projects")]
+    public async Task<ActionResult<IEnumerable<Project>>> GetProjectByUserId(Guid userId)
+    {
+        var project = await _projectService.GetByUserIdAsync<Project>(userId);
+        if (!project.Any())
+        {
+            return NotFound();
+        }
+        return Ok(project);
     }
     
     [HttpPost]
