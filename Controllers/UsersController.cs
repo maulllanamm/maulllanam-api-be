@@ -15,7 +15,15 @@ public class UsersController: ControllerBase
     private readonly IProjectService _projectService;
     private readonly IExperienceService _experienceService;
     private readonly IEducationService _educationService;
-    public UsersController(IUserService userService, ISocialMediaService socialMediaService, ISkillService skillService, IProjectService projectService, IExperienceService experienceService, IEducationService educationService)
+    private readonly ICertificateService _certificateService;
+    public UsersController(
+        IUserService userService, 
+        ISocialMediaService socialMediaService, 
+        ISkillService skillService, 
+        IProjectService projectService, 
+        IExperienceService experienceService, 
+        IEducationService educationService, 
+        ICertificateService certificateService)
     {
         _userService = userService;
         _socialMediaService = socialMediaService;
@@ -23,6 +31,7 @@ public class UsersController: ControllerBase
         _projectService = projectService;
         _experienceService = experienceService;
         _educationService = educationService;
+        _certificateService = certificateService;
     }
 
     [HttpGet]
@@ -127,6 +136,18 @@ public class UsersController: ControllerBase
             return NotFound();
         }
         return Ok(education);
+    }
+    
+    [HttpGet]
+    [Route("{userId}/certificates")]
+    public async Task<ActionResult<IEnumerable<Certificate>>> GetCertificateByUserId(Guid userId)
+    {
+        var certificate = await _certificateService.GetByUserIdAsync<Certificate>(userId);
+        if (!certificate.Any())
+        {
+            return NotFound();
+        }
+        return Ok(certificate);
     }
     
     [HttpPost]
