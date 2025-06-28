@@ -38,6 +38,17 @@ public class BaseService<T> : IBaseService<T> where T : IBaseEntity
 
         return await query.ToListAsync();
     }
+
+    public async Task<List<T>> GetByUserIdAsync<TUserEntity>(Guid userId)
+        where TUserEntity : class, T, IHasUserId
+    {
+        return await _context.Set<TUserEntity>()
+            .Where(x => x.UserId == userId && !x.IsDeleted)
+            .OrderByDescending(x => x.CreatedAt)
+            .Cast<T>()
+            .ToListAsync();
+    }
+
     
     public virtual async Task<T> GetByIdWithIncludeAsync(
         Guid id,

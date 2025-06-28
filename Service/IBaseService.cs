@@ -15,6 +15,8 @@ public interface IBaseService<T> where T : IBaseEntity
         Guid id,
         Expression<Func<T, bool>> filter = null,
         params Expression<Func<T, object>>[] includes);
+
+    Task<List<T>> GetByUserIdAsync<TUserEntity>(Guid userId) where TUserEntity : class, T, IHasUserId;
     
     Task<T?> GetByIdAsync(Guid id);
     Task<IEnumerable<T>> GetByConditionAsync(Expression<Func<T, bool>> condition);

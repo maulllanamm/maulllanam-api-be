@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 
 namespace maulllanam_api_be.Entity;
 
-public class Education : BaseEntity
+public class Education : BaseEntity, IHasUserId
 {
     public Guid UserId { get; set; }
     public string Institution { get; set; } = string.Empty;
