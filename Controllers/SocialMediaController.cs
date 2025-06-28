@@ -19,30 +19,31 @@ public class SocialMediaController: ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<SocialMedia>>> GetSocialMedias()
     {
-        var users = await _socialMediaService.GetAllAsync();
-        return Ok(users);
+        var socialMedia = await _socialMediaService.GetAllAsync();
+        return Ok(socialMedia);
     }
     
     [HttpGet ("{id}")]
     public async Task<ActionResult<IEnumerable<SocialMedia>>> GetSocialMediasById(Guid id)
     {
-        var user = await _socialMediaService.GetByIdAsync(id);
-        if (user == null)
+        var socialMedia = await _socialMediaService.GetByIdAsync(id);
+        if (socialMedia == null)
         {
             return NotFound();
         }
-        return Ok(user);
+        return Ok(socialMedia);
     }
     
-    [HttpGet ("{userId}/users")]
-    public async Task<ActionResult<IEnumerable<SocialMedia>>> GetSocialMediasUserById(Guid userId)
+    [HttpGet]
+    [Route("{id}/user")]
+    public async Task<ActionResult<IEnumerable<SocialMedia>>> GetSocialMediaByUserId(Guid id)
     {
-        var user = await _socialMediaService.GetByConditionAsync(x => !x.IsDeleted && x.UserId == userId);
-        if (user == null)
+        var socialMedia = await _socialMediaService.GetByUserIdAsync<SocialMedia>(id);
+        if (!socialMedia.Any())
         {
             return NotFound();
         }
-        return Ok(user);
+        return Ok(socialMedia);
     }
 
     [HttpPost]
