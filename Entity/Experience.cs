@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 
 namespace maulllanam_api_be.Entity;
 
-public class Experience : BaseEntity
+public class Experience : BaseEntity, IHasUserId
 {
     public Guid UserId { get; set; }
 
