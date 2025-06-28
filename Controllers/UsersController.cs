@@ -16,6 +16,7 @@ public class UsersController: ControllerBase
     private readonly IExperienceService _experienceService;
     private readonly IEducationService _educationService;
     private readonly ICertificateService _certificateService;
+    private readonly IFileService _fileService;
     public UsersController(
         IUserService userService, 
         ISocialMediaService socialMediaService, 
@@ -23,7 +24,8 @@ public class UsersController: ControllerBase
         IProjectService projectService, 
         IExperienceService experienceService, 
         IEducationService educationService, 
-        ICertificateService certificateService)
+        ICertificateService certificateService, 
+        IFileService fileService)
     {
         _userService = userService;
         _socialMediaService = socialMediaService;
@@ -32,6 +34,7 @@ public class UsersController: ControllerBase
         _experienceService = experienceService;
         _educationService = educationService;
         _certificateService = certificateService;
+        _fileService = fileService;
     }
 
     [HttpGet]
@@ -148,6 +151,26 @@ public class UsersController: ControllerBase
             return NotFound();
         }
         return Ok(certificate);
+    }
+    
+    [HttpGet("{userId}/cv/download")]
+    public async Task<IActionResult> DownloadFile(Guid userId)
+    {
+        try
+        {
+            var result = await _fileService.GetFileByUserIdAsync(userId);
+                
+            if (result == null)
+            {
+                return NotFound("File not found");
+            }
+
+            return File(result.FileStream, result.ContentType, result.FileName);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, "Internal server error occurred while downloading file");
+        }
     }
     
     [HttpPost]

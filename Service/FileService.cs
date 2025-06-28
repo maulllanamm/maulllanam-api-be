@@ -117,6 +117,27 @@ public class FileService : BaseService<File>, IFileService
                 Message = "File uploaded successfully"
             };
     }
+    
+    public async Task<FileDownloadResponseDTO?> GetFileByUserIdAsync(Guid userId)
+    {
+        var fileEntity = await _context.Files
+            .FirstOrDefaultAsync(f => f.UserId == userId && !f.IsDeleted);
+       
+        if (fileEntity == null || !System.IO.File.Exists(fileEntity.FilePath))
+        {
+            return null;
+        }
+
+        var fileStream = new FileStream(fileEntity.FilePath, FileMode.Open, FileAccess.Read);
+
+        return new FileDownloadResponseDTO()
+        {
+            FileStream = fileStream,
+            ContentType = fileEntity.ContentType,
+            FileName = fileEntity.OriginalFileName,
+            FileSize = fileEntity.FileSize
+        };
+    }
 
     public async Task<FileDownloadResponseDTO?> GetFileAsync(Guid fileId)
     {
