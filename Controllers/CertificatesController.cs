@@ -34,6 +34,18 @@ public class CertificatesController: ControllerBase
         return Ok(certificate);
     }   
     
+    [HttpGet]
+    [Route("{id}/user")]
+    public async Task<ActionResult<IEnumerable<Certificate>>> GetCertificateByUserId(Guid id)
+    {
+        var certificate = await _service.GetByUserIdAsync<Certificate>(id);
+        if (!certificate.Any())
+        {
+            return NotFound();
+        }
+        return Ok(certificate);
+    }
+    
     [HttpPost]
     public async Task<ActionResult<Certificate>> CreateCertificate([FromBody] CreateCertificateDTO certificate)
     {
