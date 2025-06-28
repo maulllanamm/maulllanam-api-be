@@ -1,3 +1,4 @@
+using maulllanam_api_be.DTO;
 using maulllanam_api_be.Entity;
 using maulllanam_api_be.Service;
 using Microsoft.AspNetCore.Mvc;
@@ -32,4 +33,20 @@ public class CertificatesController: ControllerBase
         }
         return Ok(certificate);
     }   
+    
+    [HttpPost]
+    public async Task<ActionResult<Certificate>> CreateCertificate([FromBody] CreateCertificateDTO certificate)
+    {
+        
+        var certificateEntity = new Certificate
+        {
+            UserId = certificate.UserId,
+            Name = certificate.Name,
+            IssuedBy = certificate.IssuedBy,
+            DateIssued = certificate.DateIssued,
+            Url = certificate.Url,
+        };
+        var createdCertificate = await _service.CreateAsync(certificateEntity);
+        return Ok(createdCertificate);
+    }
 }
