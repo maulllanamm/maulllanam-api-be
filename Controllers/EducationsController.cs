@@ -34,17 +34,7 @@ public class EducationsController: ControllerBase
         return Ok(education);
     }
     
-    [HttpGet]
-    [Route("{id}/user")]
-    public async Task<ActionResult<IEnumerable<Education>>> GetEducationByUserId(Guid id)
-    {
-        var education = await _service.GetByUserIdAsync<Education>(id);
-        if (!education.Any())
-        {
-            return NotFound();
-        }
-        return Ok(education);
-    }
+
     
     [HttpPost]
     public async Task<ActionResult<Education>> CreateEducation([FromBody] CreateEducationDTO education)

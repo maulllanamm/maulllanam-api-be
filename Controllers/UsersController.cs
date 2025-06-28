@@ -14,13 +14,15 @@ public class UsersController: ControllerBase
     private readonly ISkillService _skillService;
     private readonly IProjectService _projectService;
     private readonly IExperienceService _experienceService;
-    public UsersController(IUserService userService, ISocialMediaService socialMediaService, ISkillService skillService, IProjectService projectService, IExperienceService experienceService)
+    private readonly IEducationService _educationService;
+    public UsersController(IUserService userService, ISocialMediaService socialMediaService, ISkillService skillService, IProjectService projectService, IExperienceService experienceService, IEducationService educationService)
     {
         _userService = userService;
         _socialMediaService = socialMediaService;
         _skillService = skillService;
         _projectService = projectService;
         _experienceService = experienceService;
+        _educationService = educationService;
     }
 
     [HttpGet]
@@ -113,6 +115,18 @@ public class UsersController: ControllerBase
             return NotFound();
         }
         return Ok(experience);
+    }
+    
+    [HttpGet]
+    [Route("{userId}/educations")]
+    public async Task<ActionResult<IEnumerable<Education>>> GetEducationByUserId(Guid userId)
+    {
+        var education = await _educationService.GetByUserIdAsync<Education>(userId);
+        if (!education.Any())
+        {
+            return NotFound();
+        }
+        return Ok(education);
     }
     
     [HttpPost]
