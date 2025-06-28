@@ -69,4 +69,28 @@ public class CertificatesController: ControllerBase
         await _service.UpdateAsync(certificateEntity);
         return NoContent();
     }
+    
+    [HttpDelete("{id}")]
+    public async Task<ActionResult<bool>> SoftDeleteCertificate(Guid id)
+    {
+        var certificate = await _service.GetByIdAsync(id);
+        if (id != certificate.Id)
+        {
+            return BadRequest();
+        }
+
+        if (certificate == null)
+        {
+            return NotFound();
+        }
+
+        if (certificate.IsDeleted)
+        {
+            return BadRequest();
+        }
+        
+        
+        await _service.DeleteAsync(id);
+        return NoContent();
+    }
 }
