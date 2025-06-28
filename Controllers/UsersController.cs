@@ -67,10 +67,10 @@ public class UsersController: ControllerBase
     }
     
     [HttpGet]
-    [Route("{id}/about")]
-    public async Task<ActionResult<IEnumerable<User>>> GetAbout(Guid id)
+    [Route("{userId}/about")]
+    public async Task<ActionResult<IEnumerable<User>>> GetAbout(Guid userId)
     {
-        var user = await _userService.GetAbout(id);
+        var user = await _userService.GetAbout(userId);
         if (user == null)
         {
             return NotFound();
