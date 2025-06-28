@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 
 namespace maulllanam_api_be.Entity;
 
-public class Skill : BaseEntity
+public class Skill : BaseEntity, IHasUserId
 {
     public Guid UserId { get; set; }
 
