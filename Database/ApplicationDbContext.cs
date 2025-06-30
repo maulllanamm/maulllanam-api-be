@@ -91,6 +91,10 @@ public class ApplicationDbContext : DbContext
             entity.Property(e => e.Name)
                 .IsRequired()
                 .HasMaxLength(100);
+            
+            entity.Property(e => e.Level)
+                .IsRequired()
+                .HasConversion<int>(); 
 
             entity.Property(e => e.Type)
                 .IsRequired()

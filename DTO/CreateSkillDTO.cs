@@ -10,5 +10,6 @@ public class CreateSkillDTO
     public string Name { get; set; } = string.Empty;
 
     public SkillType Type { get; set; }
+    public int Level { get; set; }
 
 }

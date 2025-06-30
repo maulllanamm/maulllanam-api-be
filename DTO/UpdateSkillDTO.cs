@@ -8,6 +8,7 @@ public class UpdateSkillDTO
     public Guid UserId { get; set; }
 
     public string Name { get; set; } = string.Empty;
+    public int Level { get; set; }
 
     public SkillType Type { get; set; }
 }

@@ -7,8 +7,10 @@ public class Skill : BaseEntity, IHasUserId
     public Guid UserId { get; set; }
 
     public string Name { get; set; } = string.Empty;
-
+    
     public SkillType Type { get; set; }
+
+    public int Level { get; set; } = 0;
 
     // Navigation property
     [JsonIgnore]

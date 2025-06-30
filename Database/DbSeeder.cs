@@ -60,17 +60,17 @@ public static class DbSeeder
         {
             db.Skills.AddRange(new List<Skill>
             {
-                new Skill { Id = Guid.NewGuid(), UserId = _userGuid, Name = "HTML + CSS + JS", Type = SkillType.Frontend, CreatedAt = DateTime.UtcNow, IsDeleted = false },
-                new Skill { Id = Guid.NewGuid(), UserId = _userGuid, Name = "React", Type = SkillType.Frontend, CreatedAt = DateTime.UtcNow, IsDeleted = false },
-                new Skill { Id = Guid.NewGuid(), UserId = _userGuid, Name = ".NET Core", Type = SkillType.Backend, CreatedAt = DateTime.UtcNow, IsDeleted = false },
-                new Skill { Id = Guid.NewGuid(), UserId = _userGuid, Name = "Laravel", Type = SkillType.Backend, CreatedAt = DateTime.UtcNow, IsDeleted = false },
-                new Skill { Id = Guid.NewGuid(), UserId = _userGuid, Name = "Node JS", Type = SkillType.Backend, CreatedAt = DateTime.UtcNow, IsDeleted = false },
-                new Skill { Id = Guid.NewGuid(), UserId = _userGuid, Name = "MySQL", Type = SkillType.Database, CreatedAt = DateTime.UtcNow, IsDeleted = false },
-                new Skill { Id = Guid.NewGuid(), UserId = _userGuid, Name = "PostgreSQL", Type = SkillType.Database, CreatedAt = DateTime.UtcNow, IsDeleted = false },
-                new Skill { Id = Guid.NewGuid(), UserId = _userGuid, Name = "Redis", Type = SkillType.Database, CreatedAt = DateTime.UtcNow, IsDeleted = false },
-                new Skill { Id = Guid.NewGuid(), UserId = _userGuid, Name = "Docker", Type = SkillType.DevOps, CreatedAt = DateTime.UtcNow, IsDeleted = false },
-                new Skill { Id = Guid.NewGuid(), UserId = _userGuid, Name = "Kubernetes", Type = SkillType.DevOps, CreatedAt = DateTime.UtcNow, IsDeleted = false },
-                new Skill { Id = Guid.NewGuid(), UserId = _userGuid, Name = "Github Action", Type = SkillType.DevOps, CreatedAt = DateTime.UtcNow, IsDeleted = false }
+                new Skill { Id = Guid.NewGuid(), UserId = _userGuid, Name = "HTML + CSS + JS", Level = 90, Type = SkillType.Frontend, CreatedAt = DateTime.UtcNow, IsDeleted = false },
+                new Skill { Id = Guid.NewGuid(), UserId = _userGuid, Name = "React", Level = 80, Type = SkillType.Frontend, CreatedAt = DateTime.UtcNow, IsDeleted = false },
+                new Skill { Id = Guid.NewGuid(), UserId = _userGuid, Name = ".NET Core", Level = 90, Type = SkillType.Backend, CreatedAt = DateTime.UtcNow, IsDeleted = false },
+                new Skill { Id = Guid.NewGuid(), UserId = _userGuid, Name = "Laravel", Level = 78, Type = SkillType.Backend, CreatedAt = DateTime.UtcNow, IsDeleted = false },
+                new Skill { Id = Guid.NewGuid(), UserId = _userGuid, Name = "Node JS", Level = 75, Type = SkillType.Backend, CreatedAt = DateTime.UtcNow, IsDeleted = false },
+                new Skill { Id = Guid.NewGuid(), UserId = _userGuid, Name = "MySQL", Level = 90, Type = SkillType.Database, CreatedAt = DateTime.UtcNow, IsDeleted = false },
+                new Skill { Id = Guid.NewGuid(), UserId = _userGuid, Name = "PostgreSQL", Level = 90, Type = SkillType.Database, CreatedAt = DateTime.UtcNow, IsDeleted = false },
+                new Skill { Id = Guid.NewGuid(), UserId = _userGuid, Name = "Redis", Level = 85, Type = SkillType.Database, CreatedAt = DateTime.UtcNow, IsDeleted = false },
+                new Skill { Id = Guid.NewGuid(), UserId = _userGuid, Name = "Docker", Level = 90, Type = SkillType.DevOps, CreatedAt = DateTime.UtcNow, IsDeleted = false },
+                new Skill { Id = Guid.NewGuid(), UserId = _userGuid, Name = "Kubernetes", Level = 80, Type = SkillType.DevOps, CreatedAt = DateTime.UtcNow, IsDeleted = false },
+                new Skill { Id = Guid.NewGuid(), UserId = _userGuid, Name = "Github Action", Level = 90, Type = SkillType.DevOps, CreatedAt = DateTime.UtcNow, IsDeleted = false }
             });
 
             await db.SaveChangesAsync();
