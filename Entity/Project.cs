@@ -9,6 +9,7 @@ public class Project: BaseEntity, IHasUserId
     public string Title { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
     public string Features { get; set; } = string.Empty;
+    public string Slug { get; set; }
     public string? Url { get; set; }
     public string? Github { get; set; }
     public string Tech { get; set; }

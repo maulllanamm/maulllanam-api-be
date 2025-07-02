@@ -1,5 +1,6 @@
 using System.Text.Json;
 using maulllanam_api_be.Entity;
+using maulllanam_api_be.Helper;
 using Microsoft.EntityFrameworkCore;
 
 namespace maulllanam_api_be.Database;
@@ -102,6 +103,7 @@ private static async Task SeedProjects(ApplicationDbContext db)
                 Id = Guid.NewGuid(),
                 UserId = _userGuid,
                 Title = "BlockchainNet",
+                Slug = StringHelper.GenerateSlug("BlockchainNet"),
                 Description = "A simplified blockchain simulation application developed using .NET Core, designed to demonstrate the fundamental concepts of blockchain such as block creation, hashing, and chain validation.",
                 Tech = JsonSerializer.Serialize(new List<string> { "React", "Tailwind", ".NET Core" }),
                 Features = JsonSerializer.Serialize(new List<string>
@@ -122,6 +124,7 @@ private static async Task SeedProjects(ApplicationDbContext db)
                 Id = Guid.NewGuid(),
                 UserId = _userGuid,
                 Title = "Simple Todo App",
+                Slug = StringHelper.GenerateSlug("Simple Todo App"),
                 Description = "A basic to-do list web application built with React and Tailwind CSS, allowing users to add, edit, and delete tasks with a responsive user interface.",
                 Tech = JsonSerializer.Serialize(new List<string> { "React", "Tailwind" }),
                 Features = JsonSerializer.Serialize(new List<string>
@@ -140,6 +143,7 @@ private static async Task SeedProjects(ApplicationDbContext db)
                 Id = Guid.NewGuid(),
                 UserId = _userGuid,
                 Title = "MTerm",
+                Slug = StringHelper.GenerateSlug("MTerm"),
                 Description = "A personal portfolio website designed with a terminal-style user interface. Built with React and .NET Core 8, and integrated with PostgreSQL for structured backend data management.",
                 Tech = JsonSerializer.Serialize(new List<string> { "React", "Tailwind", ".NET Core 8", "PostgreSQL" }),
                 Features = JsonSerializer.Serialize(new List<string>
