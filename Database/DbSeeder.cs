@@ -91,49 +91,73 @@ public static class DbSeeder
         }
     }
     
-    private static async Task SeedProjects(ApplicationDbContext db)
+private static async Task SeedProjects(ApplicationDbContext db)
+{
+    if (!db.Projects.Any())
     {
-        if (!db.Projects.Any())
+        db.Projects.AddRange(new List<Project>
         {
-            db.Projects.AddRange(new List<Project>
+            new Project
             {
-                new Project
+                Id = Guid.NewGuid(),
+                UserId = _userGuid,
+                Title = "BlockchainNet",
+                Description = "A simplified blockchain simulation application developed using .NET Core, designed to demonstrate the fundamental concepts of blockchain such as block creation, hashing, and chain validation.",
+                Tech = JsonSerializer.Serialize(new List<string> { "React", "Tailwind", ".NET Core" }),
+                Features = JsonSerializer.Serialize(new List<string>
                 {
-                    Id = Guid.NewGuid(),
-                    UserId = _userGuid,
-                    Title = "BlockchainNet",
-                    Description = "A simplified blockchain simulation application developed using .NET Core, designed to demonstrate the fundamental concepts of blockchain such as block creation, hashing, and chain validation.",
-                    Tech = JsonSerializer.Serialize(new List<string> { "React", "Tailwind", ".NET Core" }),
-                    CreatedAt = DateTime.UtcNow,
-                    IsDeleted = false
-                },
-                new Project
+                    "Mining simulation with Proof of Work (PoW) algorithm",
+                    "Block creation and hash verification",
+                    "Pending transaction queue and confirmation",
+                    "Key pair generation simulation (public/private key)",
+                    "Wallet creation with digital signature simulation",
+                    "Check wallet balance and transaction history by address"
+                }),
+                Github = "https://github.com/maulllanamm/BlockchainNet",
+                CreatedAt = DateTime.UtcNow,
+                IsDeleted = false
+            },
+            new Project
+            {
+                Id = Guid.NewGuid(),
+                UserId = _userGuid,
+                Title = "Simple Todo App",
+                Description = "A basic to-do list web application built with React and Tailwind CSS, allowing users to add, edit, and delete tasks with a responsive user interface.",
+                Tech = JsonSerializer.Serialize(new List<string> { "React", "Tailwind" }),
+                Features = JsonSerializer.Serialize(new List<string>
                 {
-                    Id = Guid.NewGuid(),
-                    UserId = _userGuid,
-                    Title = "Simple Todo App",
-                    Description = "A basic to-do list web application built with React and Tailwind CSS, allowing users to add, edit, and delete tasks with a responsive user interface.",
-                    Tech = JsonSerializer.Serialize(new List<string> { "React", "Tailwind" }),
-                    CreatedAt = DateTime.UtcNow,
-                    IsDeleted = false
-                },
-                new Project
+                    "Add tasks with priority levels",
+                    "Edit and update existing tasks",
+                    "Mark tasks as completed",
+                    "Delete tasks from the list"
+                }),
+                Github = "https://github.com/maulllanamm/todo-list",
+                CreatedAt = DateTime.UtcNow,
+                IsDeleted = false
+            },
+            new Project
+            {
+                Id = Guid.NewGuid(),
+                UserId = _userGuid,
+                Title = "MTerm",
+                Description = "A personal portfolio website designed with a terminal-style user interface. Built with React and .NET Core 8, and integrated with PostgreSQL for structured backend data management.",
+                Tech = JsonSerializer.Serialize(new List<string> { "React", "Tailwind", ".NET Core 8", "PostgreSQL" }),
+                Features = JsonSerializer.Serialize(new List<string>
                 {
-                    Id = Guid.NewGuid(),
-                    UserId = _userGuid,
-                    Title = "MTerm",
-                    Description = "A personal portfolio website designed with a terminal-style user interface. Built with React and .NET Core 8, and integrated with PostgreSQL for structured backend data management.",
-                    Tech = JsonSerializer.Serialize(new List<string> { "React", "Tailwind", ".NET Core 8", "PostgreSQL" }),
-                    CreatedAt = DateTime.UtcNow,
-                    IsDeleted = false
-                },
+                    "Interactive terminal-style user interface",
+                    "Command-line inspired navigation (e.g., whoami, skills, projects)",
+                    "Dynamic data fetching from backend",
+                }),
+                Github = "https://github.com/maulllanamm/mterm",
+                CreatedAt = DateTime.UtcNow,
+                IsDeleted = false
+            },
+        });
 
-            });
-
-
-            await db.SaveChangesAsync();
-        }
+        await db.SaveChangesAsync();
     }
+}
+
     private static async Task SeedEducations(ApplicationDbContext db)
     {
         if (!db.Educations.Any())

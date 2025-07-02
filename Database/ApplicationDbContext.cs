@@ -125,6 +125,10 @@ public class ApplicationDbContext : DbContext
 
             entity.Property(e => e.Url)
                 .HasMaxLength(500);
+            
+            entity.Property(e => e.Github)
+                .IsRequired()
+                .HasMaxLength(500);
 
             entity.Property(e => e.CreatedAt).IsRequired();
             entity.Property(e => e.UpdatedAt);
@@ -136,6 +140,9 @@ public class ApplicationDbContext : DbContext
                 .OnDelete(DeleteBehavior.Cascade);
 
             entity.Property(e => e.Tech)
+                .HasColumnType("jsonb"); 
+            
+            entity.Property(e => e.Features)
                 .HasColumnType("jsonb"); 
         });
         
